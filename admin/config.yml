@@ -4,7 +4,7 @@
     "name": "github",
     "repo": "llwy26276-code/portfolio",
     "branch": "main",
-    "base_url": "https://YOUR-OAUTH-WORKER.workers.dev",
+    "base_url": ""https://portfolio-cms-oauth.llwy26276.workers.dev"",
     "auth_endpoint": "auth"
   },
   "site_url": "https://llwy26276-code.github.io/portfolio/",
