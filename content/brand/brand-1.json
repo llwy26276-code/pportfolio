@@ -1,0 +1,17 @@
+{
+  "title": "品牌宣传视频",
+  "order": 1,
+  "summary": "基于文案建立商业视觉主线，使用AIGC完成碎片化素材生成与整体剪辑。",
+  "introduction": "",
+  "role": "",
+  "cover": "",
+  "video_url": "https://www.bilibili.com/video/BV1Kj7Q6NEAj/",
+  "analysis": [
+    {
+      "title": "制作思路",
+      "text": "通过既定文案确定整体风格，再进行文生图、图生视频、素材筛选与后期拼接，完成商业化视觉表达。"
+    }
+  ],
+  "review": "",
+  "images": []
+}

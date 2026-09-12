@@ -1,0 +1,15 @@
+{
+  "name": "huang-baoyi-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "devDependencies": {
+    "cheerio": "1.2.0",
+    "decap-cms": "3.16.2",
+    "decap-server": "3.11.2"
+  }
+}

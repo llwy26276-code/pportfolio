@@ -1,928 +1,299 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>黄宝怡的作品集 | AI Video Portfolio</title>
-<style>
-
-/* ================= 多图排版与点击放大样式 ================= */
-.image-gallery {
-    display: flex;
-    gap: 8px;
-    margin-top: 1rem;
-    width: 100%;
-    overflow-x: auto; /* 如果图片太多，支持左右滑动 */
-}
-
-/* 缩略图样式 */
-.clickable-thumb {
-    flex: 1;
-    min-width: 60px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    cursor: zoom-in;
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.clickable-thumb:hover {
-    transform: scale(1.05);
-    border-color: rgba(123, 97, 255, 0.5);
-    box-shadow: 0 5px 15px rgba(123, 97, 255, 0.2);
-}
-
-/* 全屏放大灯箱遮罩层 */
-.lightbox-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(5, 5, 6, 0.9);
-    backdrop-filter: blur(20px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000; /* 层级最高，确保盖在弹窗上面 */
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-}
-
-.lightbox-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* 灯箱里放大后的图片 */
-.lightbox-img {
-    max-width: 90%;
-    max-height: 85vh;
-    border-radius: 12px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.8);
-    transform: scale(0.9);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    cursor: zoom-out;
-}
-
-.lightbox-overlay.active .lightbox-img {
-    transform: scale(1);
-}
-
-html {
-    scroll-behavior: smooth; /* 💡 让网页所有的锚点跳转都变成平滑滚动 */
-}
-
-/* ================= 关于我（About Me）新增板块样式 ================= */
-.about-section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 10% 8rem 10%;
-}
-
-.about-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 2rem;
-}
-
-/* 技能卡片基础样式与平滑动态感 */
-.skill-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-/* 悬停时的平滑动态浮起与微光特效 */
-.skill-card:hover {
-    transform: translateY(-5px);
-    background: rgba(123, 97, 255, 0.05);
-    border-color: rgba(123, 97, 255, 0.2);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(123, 97, 255, 0.05);
-}
-
-.skill-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-
-.skill-card:hover .skill-icon {
-    transform: scale(1.1); /* 悬停时图标微放大 */
-}
-
-.skill-card h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #f3f4f6;
-    margin-bottom: 0.75rem;
-}
-
-.skill-card p {
-    font-size: 0.9rem;
-    color: #9ca3af;
-    line-height: 1.5;
-}
-
-/* 图片插槽（供编导、拍摄、剪辑板块使用） */
-.image-slot {
-    width: 100%;
-    height: 120px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px dashed rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    margin-top: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    color: #4b5563;
-    transition: all 0.3s;
-}
-
-.skill-card:hover .image-slot {
-    border-color: rgba(123, 97, 255, 0.4);
-    color: #a78bfa;
-}
-
-.image-slot img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-/* ================= 专业技能点击弹窗（Modal）样式 ================= */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(5, 5, 6, 0.85);
-    backdrop-filter: blur(15px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-}
-
-.modal-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.modal-content {
-    background: #0f0f13;
-    border: 1px solid rgba(123, 97, 255, 0.2);
-    border-radius: 24px;
-    padding: 2.5rem;
-    max-width: 600px;
-    width: 90%;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(123, 97, 255, 0.1);
-    transform: scale(0.9);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    position: relative;
-}
-
-.modal-overlay.active .modal-content {
-    transform: scale(1);
-}
-
-.close-modal-btn {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.25rem;
-    background: transparent;
-    border: none;
-    color: #9ca3af;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-.close-modal-btn:hover {
-    color: #f3f4f6;
-}
-
-.modal-content h4 {
-    font-size: 1.4rem;
-    color: #f3f4f6;
-    margin-bottom: 1.5rem;
-    position: relative;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.tools-group {
-    margin-bottom: 1.5rem;
-}
-
-.tools-group label {
-    display: block;
-    font-size: 0.85rem;
-    color: #a78bfa;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-}
-
-.tools-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-}
-
-/* 工具标签样式 */
-.tool-tag {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #e5e7eb;
-    padding: 0.5rem 1rem;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.3s;
-}
-
-.tool-tag:hover {
-    background: rgba(123, 97, 255, 0.1);
-    border-color: rgba(123, 97, 255, 0.3);
-    color: #f3f4f6;
-    transform: translateY(-2px);
-}
-
-    <style>
-        /* 全局高端暗黑风格重置 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-
-        body {
-            background-color: #0a0a0c;
-            color: #f3f4f6;
-            overflow-x: hidden;
-        }
-
-        /* 霓虹渐变背景装饰 */
-        .bg-glow {
-            position: fixed;
-            top: -20%;
-            left: -10%;
-            width: 60vw;
-            height: 60vw;
-            background: radial-gradient(circle, rgba(123, 97, 255, 0.15) 0%, rgba(0,0,0,0) 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .bg-glow-2 {
-            position: fixed;
-            bottom: -20%;
-            right: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(255, 74, 140, 0.1) 0%, rgba(0,0,0,0) 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* 顶部精致导航栏 */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 10%;
-            position: sticky;
-            top: 0;
-            background: rgba(10, 10, 12, 0.8);
-            backdrop-filter: blur(12px);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #f3f4f6, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-        }
-
-        nav a {
-            color: #9ca3af;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        nav a:hover, nav a.active {
-            color: #f3f4f6;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-        }
-
-        /* 英雄横幅区（自我介绍） */
-        .hero-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 6rem 10% 4rem 10%;
-            text-align: center;
-        }
-
-        .hero-section h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero-section h1 span {
-            background: linear-gradient(90deg, #7b61ff, #ff4a8c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-section p {
-            font-size: 1.2rem;
-            color: #9ca3af;
-            max-width: 600px;
-            margin: 0 auto 2.5rem auto;
-            line-height: 1.6;
-        }
-
-        /* 核心：视频作品集网格 */
-        .portfolio-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 10% 8rem 10%;
-        }
-
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 2.5rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: #7b61ff;
-            border-radius: 2px;
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 2.5rem;
-        }
-
-        /* 视频卡片精致毛玻璃效果 */
-        .video-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .video-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(123, 97, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(123, 97, 255, 0.1);
-        }
-
-        /* 视频播放/预览容器 */
-        .video-wrapper {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    position: relative;
-    background-color: #000;
-}
-
-
-        .video-wrapper video {
-    width: 100% !important;
-    height: auto !important;
-    max-width: 100%;
-    object-fit: cover;
-}
-
-
-        /* 卡片文字介绍 */
-        .video-info {
-            padding: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .video-tag {
-            display: inline-block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 0.25rem 0.75rem;
-            background: rgba(123, 97, 255, 0.15);
-            color: #a78bfa;
-            border-radius: 20px;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-
-        .video-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #f3f4f6;
-        }
-
-        .video-desc {
-            font-size: 0.9rem;
-            color: #9ca3af;
-            line-height: 1.5;
-        }
-	.video-link {
-      	    display: inline-block;
-           margin-top: 1rem;
-           color: #a78bfa;
-           text-decoration: none;
-           font-size: 0.9rem;
-           font-weight: 600;
-           transition: all 0.3s ease;
-	 }
-
-	.video-link:hover {
-   	    color: #ffffff;
-   	    transform: translateX(4px);
-	}
-
-        /* ================= 新增：下拉解释栏目的样式 ================= */
-        .toggle-explain-btn {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.02);
-            border: none;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: #a78bfa;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.3s, color 0.3s;
-            outline: none;
-        }
-
-        .toggle-explain-btn:hover {
-            background: rgba(123, 97, 255, 0.08);
-            color: #f3f4f6;
-        }
-
-        .toggle-explain-btn .arrow {
-            display: inline-block;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 0.7rem;
-        }
-
-        /* 当展开时，旋转小箭头 */
-        .video-card.active .toggle-explain-btn .arrow {
-            transform: rotate(180deg);
-        }
-
-        .explain-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        /* 当激活时允许内容展开 */
-        .video-card.active .explain-content {
-            max-height: 500px; /* 给一个足够大的高度以容纳文字 */
-        }
-
-        .explain-text-inner {
-            padding: 1.25rem 1.5rem;
-            font-size: 0.85rem;
-            color: #9ca3af;
-            line-height: 1.6;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        /* 强调解释中的重点小标题 */
-        .explain-text-inner strong {
-            color: #f3f4f6;
-            display: block;
-            margin-bottom: 0.3rem;
-        }
-        /* ========================================================= */
-
-        /* 页脚 */
-        footer {
-            text-align: center;
-            padding: 4rem 0;
-            color: #4b5563;
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        /* 响应式适配 */
-        @media (max-width: 768px) {
-            .hero-section h1 { font-size: 2.5rem; }
-            header { padding: 1.5rem 5%; }
-            .hero-section { padding: 4rem 5% 3rem 5%; }
-            .portfolio-container { padding: 0 5% 4rem 5%; }
-            .video-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-        }
-    
-@media (max-width: 480px) {
-    .video-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        padding: 0 5%;
-    }
-}
-
-</style>
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="黄宝怡｜视频创意策划作品集，展示游戏买量创意、品牌商业视频、校园微电影与AIGC内容实践。">
+<title>黄宝怡｜视频创意策划作品集</title>
+
+<link rel="stylesheet" href="assets/css/styles.css">
 </head>
+
 <body>
 
-    <div class="bg-glow"></div>
-    <div class="bg-glow-2"></div>
+<header class="site-header">
+    <div class="container nav">
+        <a class="logo" href="#home">黄宝怡 / PORTFOLIO</a>
 
-    <header>
-        <div class="logo">黄宝怡的作品集</div>
-        <nav>
-            <a href=" " class="active">作品</a >
-            <a href="#about-me">关于我</a >
-            <a href="#">联系合作</a >
+        <button class="nav-menu" id="navMenu" aria-label="打开导航">☰</button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#game" class="active">游戏案例</a>
+            <a href="#brand">品牌视频</a>
+            <a href="#film">校园微电影</a>
+            <a href="#about">关于我</a>
         </nav>
-    </header>
-
-    <section class="hero-section">
-        <h1>探索AI生成的<span>视觉无限边界</span></h1>
-        <p>我是黄宝怡，一名视频创作者。致力于用新颖有趣的想法、精准且具感染力的文字、最前沿的 AI 技术，将想象力转化为富有灵气的视觉影像。</p >
-    </section>
-
-    <main class="portfolio-container">
-        <h2 class="section-title">精选作品集</h2>
-        
-        <div class="video-grid">
-            
-            <div class="video-card">
-                <div class="video-wrapper">
-                    <video src="videos/work1.mp4""
-                           autoplay loop muted playsinline></video>
-                </div>
-                <div class="video-info">
-                    <span class="video-tag">回顾口播</span>
-                    <h3 class="video-title">PCR前进轮胎贵州发布会</h3>
-                    <p class="video-desc">素材拍摄收集+出镜+剪辑</p >
-		      <a
-  			    class="video-link"
-  			    href=" https://www.bilibili.com/video/BV1Kj7Q6NEAX/?vd_source=364b3efd1043494efbb547d6c9a3c07f"
-  			    target="_blank">
- 			    ▶ 查看完整版
-		      </a >
-                </div>
-                <button class="toggle-explain-btn"><span>视频制作幕后解释</span><span class="arrow">▼</span></button>
-                <div class="explain-content">
-                    <div class="explain-text-inner">
-                        <strong>创作背景与技术细节：</strong>
-                        一天下午完成背稿出镜拍摄，自行收集搜寻相关素材与知识，后续完成视频的粗剪与精剪。
-                    </div>
-                </div>
-            </div>
-
-            <div class="video-card">
-                <div class="video-wrapper">
-                    <video src="videos/work2.mp4"
-                           autoplay loop muted playsinline></video>
-                </div>
-                <div class="video-info">
-                    <span class="video-tag">情绪短片</span>
-                    <h3 class="video-title">自信与自卑</h3>
-                    <p class="video-desc">运用多模态AI生成的情绪视频。</p >
-		      <a
-  			    class="video-link"
-  			    href=" https://www.bilibili.com/video/BV1DqAVzLE2x/"
-  			    target="_blank">
- 			    ▶ 查看完整版
-		      </a >
-
-                </div>
-                <button class="toggle-explain-btn"><span>视频制作幕后解释</span><span class="arrow">▼</span></button>
-                <div class="explain-content">
-                    <div class="explain-text-inner">
-                        <strong>创作背景与技术细节：</strong>
-                      自行构思主题——自信与自卑，将情绪主题作为着力点，与当下大学生积极共鸣，使用aigc的手段生成文案（有手动修改），chatgpt生成脚本，nanobanana、豆包、千问、MJ生图片，图生视频（seedance2.0、可灵、千问、豆包），配音使用剪映，完成整个工作流。
-                    </div>
-                </div>
-            </div>
-
-            <div class="video-card">
-                <div class="video-wrapper">
-                    <video src="videos/work3.mp4"
-                           autoplay loop muted playsinline></video>
-                </div>
-                <div class="video-info">
-                    <span class="video-tag">品牌宣传</span>
-                    <h3 class="video-title">优惠券</h3>
-                    <p class="video-desc">基于最新文生视频大模型制作的aigc宣传视频。</p >
-		      <a
-  			    class="video-link"
-  			    href=" https://www.bilibili.com/video/BV1Kj7Q6NEAj/"
-  			    target="_blank">
- 			    ▶ 查看完整版
-		      </a >
-
-                </div>
-                <button class="toggle-explain-btn"><span>视频制作幕后解释</span><span class="arrow">▼</span></button>
-                <div class="explain-content">
-                    <div class="explain-text-inner">
-                        <strong>创作背景与技术细节：</strong>
-                        通过既定文案制定视频主线风格为商业大众化写实风，使用各大aigc模型进行文生图图生视频的手段生成碎片化素材，一一拼接而成。
-                    </div>
-                </div>
-            </div>
-
-	        <div class="video-card">
-                <div class="video-wrapper">
-                    <video src="videos/work4.mp4"
-                           autoplay loop muted playsinline></video>
-                </div>
-                <div class="video-info">
-                    <span class="video-tag">校园微电影</span>
-                    <h3 class="video-title">《请讲》</h3>
-                    <p class="video-desc">真正意义上的自制剧本+拍摄+剪辑的剧组作品。</p >
-		      <a
-  			    class="video-link"
-  			    href=" https://www.bilibili.com/video/BV1bpEn6XEgF/"
-  			    target="_blank">
- 			    ▶ 查看完整版
-		      </a >
-
-                </div>
-                <button class="toggle-explain-btn"><span>视频制作幕后解释</span><span class="arrow">▼</span></button>
-                <div class="explain-content">
-                    <div class="explain-text-inner">
-                        <strong>创作背景与技术细节：</strong>
-                        在微电影组内担任负责人、导演兼剪辑的身份。拍摄前期组织人员，做好组内分工。组内人员几乎全是新手，所以在写剧本-拍摄-剪辑全流程都参与指导工作。拍摄前期：明确各成员职责，给出项目拍摄计划全时段安排，参与剧本主题的敲定，完成场地租借，道具设备的借用工作，现场堪景后根据场地与剧本进行分镜制定与适当的剧情调整。拍摄中期：参与全过程拍摄的指导（包括演员状态调度，设备安装与维护，拍摄运镜指导），必要时自行上阵拍摄。拍摄后期：联合剪辑完成素材整理与风格调整，把控剪辑大致方向，后期最后对电影进行精剪，完成最后成品上交。最后作品取得校一等奖的好成绩。
-                    </div>
-                </div>
-            </div>
-
- 	        <div class="video-card">
-                <div class="video-wrapper">
-                    <video src="videos/work5.mp4"
-                           autoplay loop muted playsinline></video>
-                </div>
-                <div class="video-info">
-                    <span class="video-tag">投流</span>
-                    <h3 class="video-title">广告招商</h3>
-                    <p class="video-desc">使用aigc+拍摄的素材进行剪辑。</p >
-		      <a
-  			    class="video-link"
-  			    href=" https://www.bilibili.com/video/BV1CRjT6iE3A/?vd_source=364b3efd1043494efbb547d6c9a3c07f"
-  			    target="_blank">
- 			    ▶ 查看完整版
-		      </a >
-
-                </div>
-                <button class="toggle-explain-btn"><span>视频制作幕后解释</span><span class="arrow">▼</span></button>
-                <div class="explain-content">
-                    <div class="explain-text-inner">
-                        <strong>创作背景与技术细节：</strong>
-                        经典投流招商视频。
-                    </div>
-                </div>
-            </div>
-
-            <div class="video-card">
-                <div class="video-wrapper">
-                    <video src="videos/work6.mp4"
-                           autoplay loop muted playsinline></video>
-                </div>
-                <div class="video-info">
-                    <span class="video-tag">品牌宣传aigc动画</span>
-                    <h3 class="video-title">品牌活动</h3>
-                    <p class="video-desc">自行编写脚本，全程使用aigc自制短动画。</p >
-		      <a
-  			    class="video-link"
-  			    href=" https://www.bilibili.com/video/BV1Y5jM6XE9H/?vd_source=364b3efd1043494efbb547d6c9a3c07f"
-  			    target="_blank">
- 			    ▶ 查看完整版
-		      </a >
-
-                </div>
-                <button class="toggle-explain-btn"><span>视频制作幕后解释</span><span class="arrow">▼</span></button>
-                <div class="explain-content">
-                    <div class="explain-text-inner">
-                        <strong>创作背景与技术细节：</strong>
-                       视频的呈现方式与剧情由个人灵感+AI结合而得，动画风格的AI视频较为吸睛且穿帮相比真人视频较少。从脚本与风格出发，图片生视频，边生边调节画面，直至整体框架成型，最后细调穿帮画面，完成整个视频的剪辑。
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <section class="about-section" id="about-me">
-        <h2 class="section-title">关于我</h2>
-        <div class="about-grid">
-            
-            <div class="skill-card">
-                <div class="skill-icon">🎬</div>
-                <h3>编导能力</h3>
-                <p>独立构思主题与脚本，擅长捕捉情绪共鸣点，精准把控视频故事主线与视听语言。</p >
-                <div class="image-gallery">
-        		<img src="iden/anpai.png" alt="分工安排" class="clickable-thumb">
-        		<img src="iden/jiaoben.png" alt="分镜脚本" class="clickable-thumb">
-       	 		<img src="iden/zhidao.jpg" alt="现场调度" class="clickable-thumb">
-    		  </div>
-      	 </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">🎥</div>
-                <h3>现场拍摄</h3>
-                <p>具备全面的剧组调度能力，熟练掌握镜头运镜、设备维护与现场演员状态引导。</p >
-                 <div class="image-gallery">
-        		<img src="iden/paishe2.jpg" alt="拍摄" class="clickable-thumb">
-        		<img src="iden/paishe.jpg" alt="拍摄2" class="clickable-thumb">
-    		  </div>
-         </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">✂️</div>
-                <h3>后期剪辑</h3>
-                <p>从素材整理到精剪全流程把控，节奏感强，擅长多模态素材的碎片化拼接与风格化调色。</p >
-                <div class="image-slot">
-                    <img src="iden/jianyin.png"  alt = "剪辑页面">
-                </div>
-         </div>
-
-            <div class="skill-card" id="tech-skills-card">
-                <div class="skill-icon">⚡</div>
-                <h3>专业技能</h3>
-                <p>紧跟前沿科技，全链路打通 AIGC 工具流与传统后期软件，实现高效数字内容创作。</p >
-                <div class="image-slot" style="border-style: solid; color: #a78bfa; background: rgba(123, 97, 255, 0.02);">
-                    <span>👉 点击查看工具箱</span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <div class="modal-overlay" id="skills-modal">
-        <div class="modal-content">
-            <button class="close-modal-btn" id="close-modal">✕</button>
-            <h4>我的专业工具箱</h4>
-            
-            <div class="tools-group">
-                <label>AIGC 生产力工具</label>
-                <div class="tools-tags">
-                    <span class="tool-tag">✨ nanobanana</span>
-                    <span class="tool-tag">🔮 即梦</span>
-                    <span class="tool-tag">🎬 可灵 Kuaishou</span>
-                    <span class="tool-tag">🧠 Gemini</span>
-                    <span class="tool-tag">💬 豆包</span>
-                    <span class="tool-tag">🤖 通义千问</span>
-                </div>
-            </div>
-            
-            <div class="tools-group" style="margin-bottom: 0;">
-                <label>影视后期与创意软件</label>
-                <div class="tools-tags">
-                    <span class="tool-tag">🎞️ 剪映 专业版</span>
-                    <span class="tool-tag">🎨 Photoshop</span>
-                    <span class="tool-tag">💻 Premiere Pro</span>
-                    <span class="tool-tag">💥 After Effects</span>
-                </div>
-            </div>
-        </div>
     </div>
+</header>
 
-    
-<!-- 联系合作 -->
-<section class="about-section" id="contact">
-    <h2 class="section-title">联系合作</h2>
+<main id="home">
 
-    <div class="skill-card" style="max-width:600px;margin:0 auto;text-align:center;">
-        <div class="skill-icon">🤝</div>
+<!-- =====================================================
+     01 HERO
+     ===================================================== -->
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="reveal">
+            <div class="hero-kicker">VIDEO CREATIVE / GAME UA</div>
 
-        <h3>欢迎商务合作与交流</h3>
+            <h1>
+                黄宝怡
+                <span class="role">视频创意策划</span>
+            </h1>
 
-        <p style="margin-top:1rem;line-height:1.8;color:#d1d5db;">
-            AI视频制作｜AIGC内容创作｜品牌宣传｜短视频运营
-            <br>
-            如有合作需求，欢迎通过以下方式联系我。
-        </p>
-
-        <div style="margin-top:2rem;">
-            <p style="font-size:1.1rem;margin-bottom:1rem;">
-                微信：<strong style="color:#a78bfa;">Wei19876335882</strong>
+            <p class="hero-slogan">
+                我关注的不只是视频怎么做，
+                更关注用户为什么愿意看下去。
             </p>
 
-            <p style="font-size:1.1rem;">
-                邮箱：
-                <a href="mailto:2931035393@qq.com" style="color:#a78bfa;text-decoration:none;">
-                    2931035393@qq.com
-                </a>
-            </p>
+            <div class="hero-tags">
+                <span>创意策划</span>
+                <span>镜头表达</span>
+                <span>素材迭代</span>
+            </div>
+        </div>
+
+        <div class="hero-index reveal">
+            <div class="hero-index-row">
+                <span>01</span><span>GAME UA</span>
+            </div>
+            <div class="hero-index-row">
+                <span>02</span><span>COMMERCIAL</span>
+            </div>
+            <div class="hero-index-row">
+                <span>03</span><span>DIRECTING</span>
+            </div>
+            <div class="hero-index-row">
+                <span>04</span><span>AIGC</span>
+            </div>
         </div>
     </div>
 </section>
-<footer>
-        <p>© 2026 黄宝怡 Portfolio. All Rights Reserved.</p >
-    </footer>
 
-    <div class="lightbox-overlay" id="lightbox">
-        < img src="" alt="放大预览" class="lightbox-img" id="lightbox-target">
+
+<!-- =====================================================
+     02 游戏买量创意
+     ===================================================== -->
+<section class="section game-section" id="game">
+  <div class="section-head reveal">
+    <div>
+      <div class="eyebrow">01 / GAME UA</div>
+      <h2>游戏视频创意案例</h2>
     </div>
-    <script>
-        // ================= 新增：专业技能弹窗交互逻辑 =================
-        const skillsCard = document.getElementById('tech-skills-card');
-        const skillsModal = document.getElementById('skills-modal');
-        const closeModal = document.getElementById('close-modal');
+    <p class="section-intro">从创意功能出发，将视频拆成「钩子 A → 卖点 B → 结尾引导 C」。</p>
+  </div>
 
-        // 点击卡片打开弹窗
-        skillsCard.addEventListener('click', () => {
-            skillsModal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // 锁定底层滚动
-        });
-
-        // 点击关闭按钮关闭弹窗
-        closeModal.addEventListener('click', (e) => {
-            e.stopPropagation(); // 阻止事件冒泡
-            skillsModal.classList.remove('active');
-            document.body.style.overflow = ''; // 恢复滚动
-        });
-
-        // 点击弹窗外部背景也可以关闭
-        skillsModal.addEventListener('click', (e) => {
-            if (e.target === skillsModal) {
-                skillsModal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-
-        // ================= 新增：图片点击放大灯箱交互 =================
-        const lightbox = document.getElementById('lightbox');
-        const lightboxTarget = document.getElementById('lightbox-target');
-
-        // 监听网页上所有带 clickable-thumb 类名的图片点击
-        document.addEventListener('click', function(e) {
-            if (e.target && e.target.classList.contains('clickable-thumb')) {
-                const imgSrc = e.target.getAttribute('src');
-                lightboxTarget.setAttribute('src', imgSrc); // 将大图的路径设为被点击图片的路径
-                lightbox.classList.add('active'); // 激活放大层
-                document.body.style.overflow = 'hidden'; // 禁止页面滚动
-            }
-        });
-
-        // 点击全屏任意地方（或大图本身）即可退出放大
-        lightbox.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = ''; // 恢复滚动
-        });
+  <div class="case-switcher" role="tablist" aria-label="游戏案例导航"><button class="case-tab active" id="tab-case-1" data-case="game-case-1" role="tab" aria-controls="game-case-1" aria-selected="true" tabindex="0"><span class="tab-no">01</span><strong>游戏买量视频｜结构化创意拆解</strong></button><button class="case-tab " id="tab-case-2" data-case="game-case-2" role="tab" aria-controls="game-case-2" aria-selected="false" tabindex="-1"><span class="tab-no">02</span><strong>游戏买量视频｜卖点表达案例</strong></button><button class="case-tab " id="tab-case-3" data-case="game-case-3" role="tab" aria-controls="game-case-3" aria-selected="false" tabindex="-1"><span class="tab-no">03</span><strong>游戏买量视频｜迭代复盘案例</strong></button></div><div class="case-panels"><article class="case-panel active" id="game-case-1" role="tabpanel" aria-labelledby="tab-case-1"><div class="case-title-row"><div><span class="case-index">CASE 01</span><h3>游戏买量视频｜结构化创意拆解</h3><p class="case-summary content-text">从用户第一秒注意力出发，将一条买量视频拆成 A / B / C 三段，让「为什么看下去、为什么想玩、下一步做什么」形成完整闭环。</p></div><div class="case-role"><span>ROLE</span><strong>视频创意策划 / 视频设计实习生</strong></div></div><div class="case-meta-grid"><div><span>项目概述</span><p class="content-text">填写项目背景、目标用户、视频用途与我的具体职责。建议突出：创意构思、脚本/结构、素材组织、剪辑、AE效果、根据反馈进行迭代。</p></div><div><span>核心任务</span><p class="content-text">填写本案例要解决的问题，例如：如何快速建立冲突、抛出游戏卖点，并自然承接到结尾转化。</p></div></div><div class="structure-block"><div class="block-heading"><h4>视频结构拆解</h4></div><div class="structure-card a"><div class="structure-label"><b>A</b><span>钩子 Hook</span></div><div class="structure-copy"><h5>第一时间让用户停下来</h5><p class="content-text">填写：钩子是什么？制造了什么冲突 / 好奇 / 反差？为什么用户愿意继续看？</p></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>A段画面说明 01</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>A段画面说明 02</figcaption></figure></div><div class="analysis-note"><p class="content-text">创意说明 在这里补充钩子的设计逻辑、用户心理、台词 / 字幕策略等。</p></div></div><div class="structure-card b"><div class="structure-label"><b>B</b><span>卖点 Value</span></div><div class="structure-copy"><h5>把「想看」转化为「想玩」</h5><p class="content-text">卖点可以自由拆成多个模块。每个模块都可以放多张图片，后续可继续增加。</p></div><div class="value-list"><div class="value-item"><div class="value-title"><span>卖点 01</span><em>可修改标题</em></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>卖点画面说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>卖点画面说明</figcaption></figure></div><p class="content-text">填写该卖点的表达方式、视觉重点与用户利益点。</p></div><div class="value-item"><div class="value-title"><span>卖点 02</span><em>可修改标题</em></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>卖点画面说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>卖点画面说明</figcaption></figure></div><p class="content-text">填写该卖点的表达方式、视觉重点与用户利益点。</p></div></div></div><div class="structure-card c"><div class="structure-label"><b>C</b><span>结尾引导 CTA</span></div><div class="structure-copy"><h5>完成信息收束，引导下一步行动</h5><p class="content-text">填写结尾如何承接前面的卖点，以及最终采用了什么引导方式。</p></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>CTA画面说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>CTA画面说明</figcaption></figure></div><div class="analysis-note"><p class="content-text">引导逻辑 在这里说明 CTA 为什么这样设计，以及它和前面卖点之间的关系。</p></div></div></div><div class="thinking-grid"><div class="thinking-card"><span>01</span><h4>钩子逻辑</h4><p class="content-text">填写：第一秒抓什么、冲突是什么、用户为什么停留。</p></div><div class="thinking-card"><span>02</span><h4>卖点逻辑</h4><p class="content-text">填写：卖点排序、视觉呈现、利益点与节奏关系。</p></div><div class="thinking-card"><span>03</span><h4>效果逻辑</h4><p class="content-text">填写：动效如何服务信息强调，而不是单纯炫技。</p></div><div class="thinking-card"><span>04</span><h4>节奏逻辑</h4><p class="content-text">填写：哪里快、哪里停、哪里给信息，如何形成观看节奏。</p></div></div><div class="iteration-block"><div class="block-heading"><h4>迭代复盘</h4></div><div class="iteration-flow"><div><b>V1</b><p class="content-text">初版问题</p></div><div><b>V2</b><p class="content-text">针对反馈调整</p></div><div><b>V3</b><p class="content-text">进一步优化</p></div><div><b>FINAL</b><p class="content-text">最终思路</p></div></div><p class="content-text">填写本案例最重要的复盘：什么没有效果、为什么改、改完之后解决了什么问题。避免填写具体 ROI、消耗金额等敏感数据。</p></div><div class="copyright">画面版权归属原项目方，本案例仅用于个人求职能力展示，禁止下载、二次分发、商用。</div></article><article class="case-panel " id="game-case-2" role="tabpanel" aria-labelledby="tab-case-2"><div class="case-title-row"><div><span class="case-index">CASE 02</span><h3>游戏买量视频｜卖点表达案例</h3><p class="case-summary content-text">替换为本案例的一句话总结：我解决了什么创意问题，用什么结构和表达方式完成。</p></div><div class="case-role"><span>ROLE</span><strong>视频创意策划 / 视频设计实习生</strong></div></div><div class="case-meta-grid"><div><span>项目概述</span><p class="content-text">填写项目背景、目标用户、视频用途与个人职责。</p></div><div><span>核心任务</span><p class="content-text">填写本案例最核心的创意任务。</p></div></div><div class="structure-block"><div class="block-heading"><h4>视频结构拆解</h4></div><div class="structure-card a"><div class="structure-label"><b>A</b><span>钩子 Hook</span></div><div class="structure-copy"><h5>填写钩子标题</h5><p class="content-text">填写钩子的创意逻辑。</p></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>画面说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>画面说明</figcaption></figure></div></div><div class="structure-card b"><div class="structure-label"><b>B</b><span>卖点 Value</span></div><div class="structure-copy"><h5>填写卖点表达</h5><p class="content-text">可以复制卖点模块，按需要增加图片。</p></div><div class="value-list"><div class="value-item"><div class="value-title"><span>卖点 01</span><em>标题</em></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure></div><p class="content-text">卖点说明。</p></div><div class="value-item"><div class="value-title"><span>卖点 02</span><em>标题</em></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure></div><p class="content-text">卖点说明。</p></div></div></div><div class="structure-card c"><div class="structure-label"><b>C</b><span>结尾引导 CTA</span></div><div class="structure-copy"><h5>填写结尾引导</h5><p class="content-text">填写 CTA 的承接逻辑。</p></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure></div></div></div><div class="thinking-grid"><div class="thinking-card"><span>01</span><h4>创意逻辑</h4><p class="content-text">补充说明。</p></div><div class="thinking-card"><span>02</span><h4>节奏逻辑</h4><p class="content-text">补充说明。</p></div><div class="thinking-card"><span>03</span><h4>视觉逻辑</h4><p class="content-text">补充说明。</p></div><div class="thinking-card"><span>04</span><h4>用户逻辑</h4><p class="content-text">补充说明。</p></div></div><div class="iteration-block"><div class="block-heading"><h4>迭代复盘</h4></div><div class="iteration-flow"><div><b>V1</b><p class="content-text">初版</p></div><div><b>V2</b><p class="content-text">优化</p></div><div><b>FINAL</b><p class="content-text">结果</p></div></div><p class="content-text">填写复盘。</p></div><div class="copyright">画面版权归属原项目方，本案例仅用于个人求职能力展示，禁止下载、二次分发、商用。</div></article><article class="case-panel " id="game-case-3" role="tabpanel" aria-labelledby="tab-case-3"><div class="case-title-row"><div><span class="case-index">CASE 03</span><h3>游戏买量视频｜迭代复盘案例</h3><p class="case-summary content-text">替换为本案例的一句话总结。</p></div><div class="case-role"><span>ROLE</span><strong>视频创意策划 / 视频设计实习生</strong></div></div><div class="case-meta-grid"><div><span>项目概述</span><p class="content-text">填写项目背景、目标用户、视频用途与个人职责。</p></div><div><span>核心任务</span><p class="content-text">填写本案例最核心的创意任务。</p></div></div><div class="structure-block"><div class="block-heading"><h4>视频结构拆解</h4></div><div class="structure-card a"><div class="structure-label"><b>A</b><span>钩子 Hook</span></div><div class="structure-copy"><h5>填写钩子</h5><p class="content-text">填写解释。</p></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure></div></div><div class="structure-card b"><div class="structure-label"><b>B</b><span>卖点 Value</span></div><div class="structure-copy"><h5>填写卖点</h5><p class="content-text">可以自由增加卖点。</p></div><div class="value-list"><div class="value-item"><div class="value-title"><span>卖点 01</span><em>标题</em></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure></div><p class="content-text">说明。</p></div><div class="value-item"><div class="value-title"><span>卖点 02</span><em>标题</em></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure></div><p class="content-text">说明。</p></div></div></div><div class="structure-card c"><div class="structure-label"><b>C</b><span>结尾引导 CTA</span></div><div class="structure-copy"><h5>填写结尾引导</h5><p class="content-text">填写说明。</p></div><div class="media-grid"><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure><figure><div class="media-placeholder">图片待补充</div><figcaption>说明</figcaption></figure></div></div></div><div class="thinking-grid"><div class="thinking-card"><span>01</span><h4>问题定位</h4><p class="content-text">补充说明。</p></div><div class="thinking-card"><span>02</span><h4>调整策略</h4><p class="content-text">补充说明。</p></div><div class="thinking-card"><span>03</span><h4>表达优化</h4><p class="content-text">补充说明。</p></div><div class="thinking-card"><span>04</span><h4>复盘沉淀</h4><p class="content-text">补充说明。</p></div></div><div class="iteration-block"><div class="block-heading"><h4>迭代复盘</h4></div><div class="iteration-flow"><div><b>V1</b><p class="content-text">初版</p></div><div><b>V2</b><p class="content-text">优化</p></div><div><b>V3</b><p class="content-text">进一步优化</p></div><div><b>FINAL</b><p class="content-text">最终</p></div></div><p class="content-text">填写复盘。</p></div><div class="copyright">画面版权归属原项目方，本案例仅用于个人求职能力展示，禁止下载、二次分发、商用。</div></article></div>
 
 
-        document.querySelectorAll('.toggle-explain-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const card = button.closest('.video-card');
-                // 切换当前卡片的激活状态
-                card.classList.toggle('active');
-            });
-        });
-    </script>
+</section>
 
-</body>
-</html>
+<section class="section" id="brand">
+<div class="container">
 
+    <div class="section-head reveal">
+        <div class="eyebrow">02 / COMMERCIAL</div>
+        <div>
+            <h2 class="section-title">品牌商业<br>视频</h2>
+            <p class="section-desc">
+                作为辅助板块，展示商业镜头审美、视觉包装以及AIGC内容生产能力。
+            </p>
+        </div>
+    </div>
+
+    <div class="brand-grid"><article class="brand-card reveal"><div class="brand-body"><div class="brand-topline"><span>COMMERCIAL</span></div><h3>品牌宣传视频</h3><p class="content-text">基于文案建立商业视觉主线，使用AIGC完成碎片化素材生成与整体剪辑。</p><div class="detail"><strong>制作思路</strong><p class="content-text">通过既定文案确定整体风格，再进行文生图、图生视频、素材筛选与后期拼接，完成商业化视觉表达。</p></div><a class="contact-link work-video-link" href="https://www.bilibili.com/video/BV1Kj7Q6NEAj/" target="_blank" rel="noopener noreferrer">查看完整视频 ↗</a></div></article><article class="brand-card reveal"><div class="brand-body"><div class="brand-topline"><span>COMMERCIAL</span></div><h3>品牌活动 AIGC 动画</h3><p class="content-text">自行编写脚本并使用AIGC完成短动画，强调视觉吸引力与内容节奏。</p><div class="detail"><strong>制作思路</strong><p class="content-text">从脚本与风格出发，持续进行图片生成、图生视频、画面修正和剪辑调整，逐步完成整体视觉框架。</p></div><a class="contact-link work-video-link" href="https://www.bilibili.com/video/BV1Y5jM6XE9H/" target="_blank" rel="noopener noreferrer">查看完整视频 ↗</a></div></article></div>
+</div>
+</section>
+
+
+<!-- =====================================================
+     04 校园微电影
+     ===================================================== -->
+<section class="section" id="film">
+<div class="container">
+
+    <div class="section-head reveal">
+        <div class="eyebrow">03 / SHORT FILM</div>
+        <div>
+            <h2 class="section-title">校园<br>微电影</h2>
+            <p class="section-desc">
+                用一个完整剧组项目证明故事叙事、现场调度、镜头表达与情绪控制能力。
+            </p>
+        </div>
+    </div>
+
+    <article class="film-layout reveal"><div class="film-video"><a class="contact-link work-video-link" href="https://www.bilibili.com/video/BV1bpEn6XEgF/" target="_blank" rel="noopener noreferrer">查看完整视频 ↗</a></div><div class="film-info"><div class="mini-label">DIRECTING / STORYTELLING</div><h3>《请讲》</h3><p class="content-text">真正意义上的自制剧本、拍摄与后期完整剧组作品。 在项目中承担负责人、导演兼剪辑等职责，参与从前期筹备到最终成片的完整流程。</p><p class="content-text">负责人 / 导演 / 剪辑</p><div class="film-points"><div class="film-point"><span>01 / PRE</span><p class="content-text">组织人员与分工，参与主题与剧本敲定，制定拍摄计划并完成场地、道具、设备等前期筹备。</p></div><div class="film-point"><span>02 / SHOOT</span><p class="content-text">现场进行演员状态调度、设备管理、镜头与运镜指导，并根据实际场地调整分镜与剧情。</p></div><div class="film-point"><span>03 / POST</span><p class="content-text">参与素材整理、风格调整与剪辑方向把控，最终完成成片精剪。</p></div><div class="film-point"><span>04 / RESULT</span><p class="content-text">作品最终获得校级一等奖。</p></div></div></div></article>
+</div>
+</section>
+
+
+<!-- =====================================================
+     05 关于我 + 技能
+     ===================================================== -->
+<section class="section about-section" id="about">
+<div class="container">
+
+    <div class="section-head reveal">
+        <div class="eyebrow">04 / ABOUT</div>
+        <div>
+            <h2 class="section-title">关于我</h2>
+        </div>
+    </div>
+
+    <div class="about-layout reveal">
+        <div class="about-lead">
+            我想做的，不只是把视频做出来，
+            而是参与决定“应该做什么”。
+        </div>
+
+        <div class="about-text">
+            <p>
+                我是一名正在向视频创意策划发展的内容创作者，
+                具备游戏买量、品牌视频、AIGC内容和校园微电影实践经验。
+            </p>
+            <p>
+                我的关注点从单纯的制作执行逐渐转向：
+                创意为什么成立、镜头为什么这样安排、用户为什么愿意继续看，
+                以及素材如何通过反馈不断迭代。
+            </p>
+            <p>
+                我希望在实际项目中继续强化创意策划、用户洞察、
+                脚本分镜和内容策略能力，同时保留从想法到成片的执行能力。
+            </p>
+        </div>
+    </div>
+
+
+    <div class="skills reveal">
+        <div class="mini-label" style="margin-bottom:20px;">SKILL MATRIX</div>
+
+        <div class="skill-grid">
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>创意拆解</h3>
+                    <span class="skill-score">★★★★★</span>
+                </div>
+                <p>从用户、卖点和传播逻辑出发拆解素材结构，寻找可复用的创意方法。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>用户洞察</h3>
+                    <span class="skill-score">★★★★★</span>
+                </div>
+                <p>从目标用户的情绪、需求与注意力习惯出发寻找内容切入点。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>素材迭代策略</h3>
+                    <span class="skill-score">★★★★★</span>
+                </div>
+                <p>根据素材反馈调整钩子、节奏、信息密度与卖点表达，形成迭代思维。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>镜头节奏把控</h3>
+                    <span class="skill-score">★★★★★</span>
+                </div>
+                <p>关注镜头之间的信息关系、情绪递进与观看节奏，而非单纯堆叠素材。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>视觉叙事</h3>
+                    <span class="skill-score">★★★★☆</span>
+                </div>
+                <p>具备脚本、分镜、构图、镜头调度与故事表达基础。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>AIGC内容生产</h3>
+                    <span class="skill-score">★★★★☆</span>
+                </div>
+                <p>能够将AIGC作为创意生产工具，辅助完成图片、视频、动画及视觉方案。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>视频剪辑</h3>
+                    <span class="skill-score">★★★★☆</span>
+                </div>
+                <p>具备从素材整理、粗剪、精剪到最终成片的完整制作能力。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>AE / PS / PR</h3>
+                    <span class="skill-score">★★★☆☆</span>
+                </div>
+                <p>作为视觉执行工具，用于特效、包装、合成、画面处理与后期制作。</p>
+            </div>
+
+        </div>
+
+        <div class="tool-box">
+            <h4>TOOLS / 工具箱</h4>
+            <div class="tool-tags">
+                <span class="tool-tag">剪映专业版</span>
+                <span class="tool-tag">Premiere Pro</span>
+                <span class="tool-tag">After Effects</span>
+                <span class="tool-tag">Photoshop</span>
+                <span class="tool-tag">Seedance</span>
+                <span class="tool-tag">可灵</span>
+                <span class="tool-tag">即梦</span>
+                <span class="tool-tag">Nanobanana</span>
+                <span class="tool-tag">豆包</span>
+                <span class="tool-tag">通义千问</span>
+                <span class="tool-tag">Gemini</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+</section>
+
+
+<!-- =====================================================
+     06 联系
+     ===================================================== -->
+<section class="contact">
+    <div class="container reveal">
+        <div class="mini-label">CONTACT</div>
+        <h2>LET'S CREATE</h2>
+        <p>
+            如果你正在寻找能够参与创意、脚本、分镜与视频制作的内容创作者，
+            欢迎联系我。
+        </p>
+
+        <div class="contact-links">
+            <a class="contact-link" href="mailto:2931035393@qq.com">2931035393@qq.com</a>
+            <span class="contact-link">微信：Wei19876335882</span>
+        </div>
+    </div>
+</section>
+
+</main>
+
+
+<footer>
+    <div class="container footer-inner">
+        <span>© 2026 黄宝怡 Portfolio. All Rights Reserved.</span>
+        <span>VIDEO CREATIVE / GAME UA / DIRECTING</span>
+    </div>
+</footer>
+
+
+<!-- 图片灯箱 -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="关闭">×</button>
+    <img id="lightboxImage" alt="作品大图预览">
+</div>
+
+
+<script src="assets/js/main.js" defer=""></script>
+
+
+
+</body></html>

@@ -1,0 +1,8 @@
+name = "portfolio-cms-oauth"
+main = "worker.js"
+compatibility_date = "2026-09-12"
+
+[vars]
+CMS_ORIGIN = "https://llwy26276-code.github.io"
+# Set GITHUB_CLIENT_ID as a Worker variable.
+# Set GITHUB_CLIENT_SECRET and STATE_SECRET as encrypted Worker secrets.

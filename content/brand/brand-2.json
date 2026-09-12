@@ -1,0 +1,17 @@
+{
+  "title": "品牌活动 AIGC 动画",
+  "order": 2,
+  "summary": "自行编写脚本并使用AIGC完成短动画，强调视觉吸引力与内容节奏。",
+  "introduction": "",
+  "role": "",
+  "cover": "",
+  "video_url": "https://www.bilibili.com/video/BV1Y5jM6XE9H/",
+  "analysis": [
+    {
+      "title": "制作思路",
+      "text": "从脚本与风格出发，持续进行图片生成、图生视频、画面修正和剪辑调整，逐步完成整体视觉框架。"
+    }
+  ],
+  "review": "",
+  "images": []
+}

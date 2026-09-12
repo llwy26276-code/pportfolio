@@ -1,0 +1,110 @@
+{
+  "title": "游戏买量视频｜迭代复盘案例",
+  "order": 3,
+  "summary": "替换为本案例的一句话总结。",
+  "role": "视频创意策划 / 视频设计实习生",
+  "introduction": "填写项目背景、目标用户、视频用途与个人职责。",
+  "task": "填写本案例最核心的创意任务。",
+  "cover": "",
+  "video_url": "",
+  "hook": {
+    "title": "填写钩子",
+    "text": "填写解释。",
+    "images": [
+      {
+        "image": "",
+        "caption": "说明"
+      },
+      {
+        "image": "",
+        "caption": "说明"
+      }
+    ],
+    "analysis": ""
+  },
+  "cta": {
+    "title": "填写结尾引导",
+    "text": "填写说明。",
+    "images": [
+      {
+        "image": "",
+        "caption": "说明"
+      },
+      {
+        "image": "",
+        "caption": "说明"
+      }
+    ],
+    "analysis": ""
+  },
+  "value_title": "填写卖点",
+  "value_text": "可以自由增加卖点。",
+  "selling_points": [
+    {
+      "title": "标题",
+      "text": "说明。",
+      "images": [
+        {
+          "image": "",
+          "caption": "说明"
+        },
+        {
+          "image": "",
+          "caption": "说明"
+        }
+      ]
+    },
+    {
+      "title": "标题",
+      "text": "说明。",
+      "images": [
+        {
+          "image": "",
+          "caption": "说明"
+        },
+        {
+          "image": "",
+          "caption": "说明"
+        }
+      ]
+    }
+  ],
+  "analysis": [
+    {
+      "title": "问题定位",
+      "text": "补充说明。"
+    },
+    {
+      "title": "调整策略",
+      "text": "补充说明。"
+    },
+    {
+      "title": "表达优化",
+      "text": "补充说明。"
+    },
+    {
+      "title": "复盘沉淀",
+      "text": "补充说明。"
+    }
+  ],
+  "iterations": [
+    {
+      "title": "V1",
+      "text": "初版"
+    },
+    {
+      "title": "V2",
+      "text": "优化"
+    },
+    {
+      "title": "V3",
+      "text": "进一步优化"
+    },
+    {
+      "title": "FINAL",
+      "text": "最终"
+    }
+  ],
+  "review": "填写复盘。",
+  "copyright": "画面版权归属原项目方，本案例仅用于个人求职能力展示，禁止下载、二次分发、商用。"
+}

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="黄宝怡｜视频创意策划作品集，展示游戏买量创意、品牌商业视频、校园微电影与AIGC内容实践。">
+<title>黄宝怡｜视频创意策划作品集</title>
+
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="container nav">
+        <a class="logo" href="#home">黄宝怡 / PORTFOLIO</a>
+
+        <button class="nav-menu" id="navMenu" aria-label="打开导航">☰</button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#game" class="active">游戏案例</a>
+            <a href="#brand">品牌视频</a>
+            <a href="#film">校园微电影</a>
+            <a href="#about">关于我</a>
+        </nav>
+    </div>
+</header>
+
+<main id="home">
+
+<!-- =====================================================
+     01 HERO
+     ===================================================== -->
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="reveal">
+            <div class="hero-kicker">VIDEO CREATIVE / GAME UA</div>
+
+            <h1>
+                黄宝怡
+                <span class="role">视频创意策划</span>
+            </h1>
+
+            <p class="hero-slogan">
+                我关注的不只是视频怎么做，
+                更关注用户为什么愿意看下去。
+            </p>
+
+            <div class="hero-tags">
+                <span>创意策划</span>
+                <span>镜头表达</span>
+                <span>素材迭代</span>
+            </div>
+        </div>
+
+        <div class="hero-index reveal">
+            <div class="hero-index-row">
+                <span>01</span><span>GAME UA</span>
+            </div>
+            <div class="hero-index-row">
+                <span>02</span><span>COMMERCIAL</span>
+            </div>
+            <div class="hero-index-row">
+                <span>03</span><span>DIRECTING</span>
+            </div>
+            <div class="hero-index-row">
+                <span>04</span><span>AIGC</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     02 游戏买量创意
+     ===================================================== -->
+<section class="section game-section" id="game">
+  <div class="section-head reveal">
+    <div>
+      <div class="eyebrow">01 / GAME UA</div>
+      <h2>游戏视频创意案例</h2>
+    </div>
+    <p class="section-intro">从创意功能出发，将视频拆成「钩子 A → 卖点 B → 结尾引导 C」。</p>
+  </div>
+
+  <div class="case-switcher reveal" role="tablist" aria-label="游戏案例导航">
+    <button class="case-tab active" data-case="game-case-01" role="tab" aria-selected="true">
+      <span class="tab-no">01</span><span><strong>案例一</strong></span>
+    </button>
+    <button class="case-tab" data-case="game-case-02" role="tab" aria-selected="false">
+      <span class="tab-no">02</span><span><strong>案例二</strong></span>
+    </button>
+    <button class="case-tab" data-case="game-case-03" role="tab" aria-selected="false">
+      <span class="tab-no">03</span><span><strong>案例三</strong></span>
+    </button>
+  </div>
+
+  <div class="case-panels">
+    <article class="case-panel active reveal" id="game-case-01" role="tabpanel">
+      <div class="case-title-row">
+        <div>
+          <span class="case-index">CASE 01</span>
+          <h3>游戏买量视频｜结构化创意拆解</h3>
+          <p class="case-summary" contenteditable="true">从用户第一秒注意力出发，将一条买量视频拆成 A / B / C 三段，让「为什么看下去、为什么想玩、下一步做什么」形成完整闭环。</p>
+        </div>
+        <div class="case-role"><span>ROLE</span><strong contenteditable="true">视频创意策划 / 视频设计实习生</strong></div>
+      </div>
+
+      <div class="case-meta-grid">
+        <div><span>项目概述</span><p contenteditable="true">填写项目背景、目标用户、视频用途与我的具体职责。建议突出：创意构思、脚本/结构、素材组织、剪辑、AE效果、根据反馈进行迭代。</p></div>
+        <div><span>核心任务</span><p contenteditable="true">填写本案例要解决的问题，例如：如何快速建立冲突、抛出游戏卖点，并自然承接到结尾转化。</p></div>
+      </div>
+
+      <div class="structure-block">
+        <div class="block-heading"><div><div class="eyebrow">STRUCTURE</div><h4>视频结构拆解</h4></div><p>这里不再出现「远景 / 中景 / 特写」。每一段都服务于创意功能；图片数量可自由增加。</p></div>
+
+        <div class="structure-card a">
+          <div class="structure-label"><b>A</b><span>钩子 Hook</span></div>
+          <div class="structure-copy"><h5 contenteditable="true">第一时间让用户停下来</h5><p contenteditable="true">填写：钩子是什么？制造了什么冲突 / 好奇 / 反差？为什么用户愿意继续看？</p></div>
+          <div class="media-grid editable-media">
+            <figure><div class="media-placeholder" contenteditable="true">替换图片 / GIF</div><figcaption contenteditable="true">A段画面说明 01</figcaption></figure>
+            <figure><div class="media-placeholder" contenteditable="true">替换图片 / GIF</div><figcaption contenteditable="true">A段画面说明 02</figcaption></figure>
+          </div>
+          <div class="analysis-note" contenteditable="true"><strong>创意说明</strong> 在这里补充钩子的设计逻辑、用户心理、台词 / 字幕策略等。</div>
+        </div>
+
+        <div class="structure-card b">
+          <div class="structure-label"><b>B</b><span>卖点 Value</span></div>
+          <div class="structure-copy"><h5 contenteditable="true">把「想看」转化为「想玩」</h5><p contenteditable="true">卖点可以自由拆成多个模块。每个模块都可以放多张图片，后续可继续增加。</p></div>
+          <div class="value-list">
+            <div class="value-item">
+              <div class="value-title"><span>卖点 01</span><em contenteditable="true">可修改标题</em></div>
+              <div class="media-grid editable-media">
+                <figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">卖点画面说明</figcaption></figure>
+                <figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">卖点画面说明</figcaption></figure>
+              </div>
+              <p contenteditable="true">填写该卖点的表达方式、视觉重点与用户利益点。</p>
+            </div>
+            <div class="value-item">
+              <div class="value-title"><span>卖点 02</span><em contenteditable="true">可修改标题</em></div>
+              <div class="media-grid editable-media">
+                <figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">卖点画面说明</figcaption></figure>
+                <figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">卖点画面说明</figcaption></figure>
+              </div>
+              <p contenteditable="true">填写该卖点的表达方式、视觉重点与用户利益点。</p>
+            </div>
+          </div>
+          <button class="add-item" type="button">＋ 增加一个卖点模块</button>
+        </div>
+
+        <div class="structure-card c">
+          <div class="structure-label"><b>C</b><span>结尾引导 CTA</span></div>
+          <div class="structure-copy"><h5 contenteditable="true">完成信息收束，引导下一步行动</h5><p contenteditable="true">填写结尾如何承接前面的卖点，以及最终采用了什么引导方式。</p></div>
+          <div class="media-grid editable-media">
+            <figure><div class="media-placeholder" contenteditable="true">替换结尾画面</div><figcaption contenteditable="true">CTA画面说明</figcaption></figure>
+            <figure><div class="media-placeholder" contenteditable="true">替换结尾画面</div><figcaption contenteditable="true">CTA画面说明</figcaption></figure>
+          </div>
+          <div class="analysis-note" contenteditable="true"><strong>引导逻辑</strong> 在这里说明 CTA 为什么这样设计，以及它和前面卖点之间的关系。</div>
+        </div>
+      </div>
+
+      <div class="thinking-grid">
+        <div class="thinking-card"><span>01 / HOOK</span><h4 contenteditable="true">钩子逻辑</h4><p contenteditable="true">填写：第一秒抓什么、冲突是什么、用户为什么停留。</p></div>
+        <div class="thinking-card"><span>02 / VALUE</span><h4 contenteditable="true">卖点逻辑</h4><p contenteditable="true">填写：卖点排序、视觉呈现、利益点与节奏关系。</p></div>
+        <div class="thinking-card"><span>03 / MOTION</span><h4 contenteditable="true">效果逻辑</h4><p contenteditable="true">填写：动效如何服务信息强调，而不是单纯炫技。</p></div>
+        <div class="thinking-card"><span>04 / RHYTHM</span><h4 contenteditable="true">节奏逻辑</h4><p contenteditable="true">填写：哪里快、哪里停、哪里给信息，如何形成观看节奏。</p></div>
+      </div>
+
+      <div class="iteration-block">
+        <div class="block-heading"><div><div class="eyebrow">ITERATION</div><h4>迭代复盘</h4></div><p>建议使用定性表达，后续可根据实际情况补充。</p></div>
+        <div class="iteration-flow"><div><b>V1</b><p contenteditable="true">初版问题</p></div><i>→</i><div><b>V2</b><p contenteditable="true">针对反馈调整</p></div><i>→</i><div><b>V3</b><p contenteditable="true">进一步优化</p></div><i>→</i><div><b>FINAL</b><p contenteditable="true">最终思路</p></div></div>
+        <p class="iteration-summary" contenteditable="true">填写本案例最重要的复盘：什么没有效果、为什么改、改完之后解决了什么问题。避免填写具体 ROI、消耗金额等敏感数据。</p>
+      </div>
+      <div class="copyright">画面版权归属原项目方，本案例仅用于个人求职能力展示，禁止下载、二次分发、商用。</div>
+    </article>
+
+    <article class="case-panel reveal" id="game-case-02" role="tabpanel">
+      <div class="case-title-row"><div><span class="case-index">CASE 02</span><h3 contenteditable="true">游戏买量视频｜卖点表达案例</h3><p class="case-summary" contenteditable="true">替换为本案例的一句话总结：我解决了什么创意问题，用什么结构和表达方式完成。</p></div><div class="case-role"><span>ROLE</span><strong contenteditable="true">视频创意策划 / 视频设计实习生</strong></div></div>
+      <div class="case-meta-grid"><div><span>项目概述</span><p contenteditable="true">填写项目背景、目标用户、视频用途与个人职责。</p></div><div><span>核心任务</span><p contenteditable="true">填写本案例最核心的创意任务。</p></div></div>
+      <div class="structure-block">
+        <div class="block-heading"><div><div class="eyebrow">A / B / C</div><h4>结构拆解</h4></div><p>按「钩子 → 卖点 → 结尾引导」组织内容。</p></div>
+        <div class="structure-card a"><div class="structure-label"><b>A</b><span>钩子 Hook</span></div><div class="structure-copy"><h5 contenteditable="true">填写钩子标题</h5><p contenteditable="true">填写钩子的创意逻辑。</p></div><div class="media-grid"><figure><div class="media-placeholder" contenteditable="true">替换图片</div><figcaption contenteditable="true">画面说明</figcaption></figure><figure><div class="media-placeholder" contenteditable="true">替换图片</div><figcaption contenteditable="true">画面说明</figcaption></figure></div></div>
+        <div class="structure-card b"><div class="structure-label"><b>B</b><span>卖点 Value</span></div><div class="structure-copy"><h5 contenteditable="true">填写卖点表达</h5><p contenteditable="true">可以复制卖点模块，按需要增加图片。</p></div><div class="value-list"><div class="value-item"><div class="value-title"><span>卖点 01</span><em contenteditable="true">标题</em></div><div class="media-grid"><figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">说明</figcaption></figure><figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">说明</figcaption></figure></div><p contenteditable="true">卖点说明。</p></div><div class="value-item"><div class="value-title"><span>卖点 02</span><em contenteditable="true">标题</em></div><div class="media-grid"><figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">说明</figcaption></figure><figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">说明</figcaption></figure></div><p contenteditable="true">卖点说明。</p></div></div><button class="add-item" type="button">＋ 增加一个卖点模块</button></div>
+        <div class="structure-card c"><div class="structure-label"><b>C</b><span>结尾引导 CTA</span></div><div class="structure-copy"><h5 contenteditable="true">填写结尾引导</h5><p contenteditable="true">填写 CTA 的承接逻辑。</p></div><div class="media-grid"><figure><div class="media-placeholder" contenteditable="true">替换图片</div><figcaption contenteditable="true">说明</figcaption></figure><figure><div class="media-placeholder" contenteditable="true">替换图片</div><figcaption contenteditable="true">说明</figcaption></figure></div></div>
+      </div>
+      <div class="thinking-grid"><div class="thinking-card"><span>01</span><h4 contenteditable="true">创意逻辑</h4><p contenteditable="true">补充说明。</p></div><div class="thinking-card"><span>02</span><h4 contenteditable="true">节奏逻辑</h4><p contenteditable="true">补充说明。</p></div><div class="thinking-card"><span>03</span><h4 contenteditable="true">视觉逻辑</h4><p contenteditable="true">补充说明。</p></div><div class="thinking-card"><span>04</span><h4 contenteditable="true">用户逻辑</h4><p contenteditable="true">补充说明。</p></div></div>
+      <div class="iteration-block"><div class="block-heading"><div><div class="eyebrow">ITERATION</div><h4>迭代复盘</h4></div></div><div class="iteration-flow"><div><b>V1</b><p contenteditable="true">初版</p></div><i>→</i><div><b>V2</b><p contenteditable="true">优化</p></div><i>→</i><div><b>FINAL</b><p contenteditable="true">结果</p></div></div><p class="iteration-summary" contenteditable="true">填写复盘。</p></div>
+      <div class="copyright">画面版权归属原项目方，本案例仅用于个人求职能力展示，禁止下载、二次分发、商用。</div>
+    </article>
+
+    <article class="case-panel reveal" id="game-case-03" role="tabpanel">
+      <div class="case-title-row"><div><span class="case-index">CASE 03</span><h3 contenteditable="true">游戏买量视频｜迭代复盘案例</h3><p class="case-summary" contenteditable="true">替换为本案例的一句话总结。</p></div><div class="case-role"><span>ROLE</span><strong contenteditable="true">视频创意策划 / 视频设计实习生</strong></div></div>
+      <div class="case-meta-grid"><div><span>项目概述</span><p contenteditable="true">填写项目背景、目标用户、视频用途与个人职责。</p></div><div><span>核心任务</span><p contenteditable="true">填写本案例最核心的创意任务。</p></div></div>
+      <div class="structure-block">
+        <div class="block-heading"><div><div class="eyebrow">A / B / C</div><h4>结构拆解</h4></div><p>按功能拆解，图片和文字均可直接修改。</p></div>
+        <div class="structure-card a"><div class="structure-label"><b>A</b><span>钩子 Hook</span></div><div class="structure-copy"><h5 contenteditable="true">填写钩子</h5><p contenteditable="true">填写解释。</p></div><div class="media-grid"><figure><div class="media-placeholder" contenteditable="true">替换图片</div><figcaption contenteditable="true">说明</figcaption></figure><figure><div class="media-placeholder" contenteditable="true">替换图片</div><figcaption contenteditable="true">说明</figcaption></figure></div></div>
+        <div class="structure-card b"><div class="structure-label"><b>B</b><span>卖点 Value</span></div><div class="structure-copy"><h5 contenteditable="true">填写卖点</h5><p contenteditable="true">可以自由增加卖点。</p></div><div class="value-list"><div class="value-item"><div class="value-title"><span>卖点 01</span><em contenteditable="true">标题</em></div><div class="media-grid"><figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">说明</figcaption></figure><figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">说明</figcaption></figure></div><p contenteditable="true">说明。</p></div><div class="value-item"><div class="value-title"><span>卖点 02</span><em contenteditable="true">标题</em></div><div class="media-grid"><figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">说明</figcaption></figure><figure><div class="media-placeholder" contenteditable="true">插入图片</div><figcaption contenteditable="true">说明</figcaption></figure></div><p contenteditable="true">说明。</p></div></div><button class="add-item" type="button">＋ 增加一个卖点模块</button></div>
+        <div class="structure-card c"><div class="structure-label"><b>C</b><span>结尾引导 CTA</span></div><div class="structure-copy"><h5 contenteditable="true">填写结尾引导</h5><p contenteditable="true">填写说明。</p></div><div class="media-grid"><figure><div class="media-placeholder" contenteditable="true">替换图片</div><figcaption contenteditable="true">说明</figcaption></figure><figure><div class="media-placeholder" contenteditable="true">替换图片</div><figcaption contenteditable="true">说明</figcaption></figure></div></div>
+      </div>
+      <div class="thinking-grid"><div class="thinking-card"><span>01</span><h4 contenteditable="true">问题定位</h4><p contenteditable="true">补充说明。</p></div><div class="thinking-card"><span>02</span><h4 contenteditable="true">调整策略</h4><p contenteditable="true">补充说明。</p></div><div class="thinking-card"><span>03</span><h4 contenteditable="true">表达优化</h4><p contenteditable="true">补充说明。</p></div><div class="thinking-card"><span>04</span><h4 contenteditable="true">复盘沉淀</h4><p contenteditable="true">补充说明。</p></div></div>
+      <div class="iteration-block"><div class="block-heading"><div><div class="eyebrow">ITERATION</div><h4>迭代复盘</h4></div></div><div class="iteration-flow"><div><b>V1</b><p contenteditable="true">初版</p></div><i>→</i><div><b>V2</b><p contenteditable="true">优化</p></div><i>→</i><div><b>V3</b><p contenteditable="true">进一步优化</p></div><i>→</i><div><b>FINAL</b><p contenteditable="true">最终</p></div></div><p class="iteration-summary" contenteditable="true">填写复盘。</p></div>
+      <div class="copyright">画面版权归属原项目方，本案例仅用于个人求职能力展示，禁止下载、二次分发、商用。</div>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="brand">
+<div class="container">
+
+    <div class="section-head reveal">
+        <div class="eyebrow">02 / COMMERCIAL</div>
+        <div>
+            <h2 class="section-title">品牌商业<br>视频</h2>
+            <p class="section-desc">
+                作为辅助板块，展示商业镜头审美、视觉包装以及AIGC内容生产能力。
+            </p>
+        </div>
+    </div>
+
+    <div class="brand-grid">
+
+        <article class="brand-card reveal">
+            <div class="video-box">
+                <video src="work3.mp4" controls playsinline preload="metadata"></video>
+            </div>
+            <div class="brand-body">
+                <div class="brand-topline">
+                    <span>CASE 01 / AIGC</span>
+                    <span>COMMERCIAL</span>
+                </div>
+                <h3>品牌宣传视频</h3>
+                <p>基于文案建立商业视觉主线，使用AIGC完成碎片化素材生成与整体剪辑。</p>
+                <div class="detail">
+                    <strong>制作思路</strong>
+                    <p>通过既定文案确定整体风格，再进行文生图、图生视频、素材筛选与后期拼接，完成商业化视觉表达。</p>
+                </div>
+                <a class="contact-link" style="display:inline-block;margin-top:20px;" href="https://www.bilibili.com/video/BV1Kj7Q6NEAj/" target="_blank" rel="noopener noreferrer">查看完整版 ↗</a>
+            </div>
+        </article>
+
+        <article class="brand-card reveal">
+            <div class="video-box">
+                <video src="work6.mp4" controls playsinline preload="metadata"></video>
+            </div>
+            <div class="brand-body">
+                <div class="brand-topline">
+                    <span>CASE 02 / AIGC</span>
+                    <span>BRAND VISUAL</span>
+                </div>
+                <h3>品牌活动 AIGC 动画</h3>
+                <p>自行编写脚本并使用AIGC完成短动画，强调视觉吸引力与内容节奏。</p>
+                <div class="detail">
+                    <strong>制作思路</strong>
+                    <p>从脚本与风格出发，持续进行图片生成、图生视频、画面修正和剪辑调整，逐步完成整体视觉框架。</p>
+                </div>
+                <a class="contact-link" style="display:inline-block;margin-top:20px;" href="https://www.bilibili.com/video/BV1Y5jM6XE9H/" target="_blank" rel="noopener noreferrer">查看完整版 ↗</a>
+            </div>
+        </article>
+
+    </div>
+</div>
+</section>
+
+
+<!-- =====================================================
+     04 校园微电影
+     ===================================================== -->
+<section class="section" id="film">
+<div class="container">
+
+    <div class="section-head reveal">
+        <div class="eyebrow">03 / SHORT FILM</div>
+        <div>
+            <h2 class="section-title">校园<br>微电影</h2>
+            <p class="section-desc">
+                用一个完整剧组项目证明故事叙事、现场调度、镜头表达与情绪控制能力。
+            </p>
+        </div>
+    </div>
+
+    <div class="film-layout reveal">
+        <div class="film-video">
+            <video src="work4.mp4" controls playsinline preload="metadata"></video>
+        </div>
+
+        <div class="film-info">
+            <div class="mini-label">DIRECTING / STORYTELLING</div>
+            <h3>《请讲》</h3>
+
+            <p>
+                真正意义上的自制剧本、拍摄与后期完整剧组作品。
+                在项目中承担负责人、导演兼剪辑等职责，参与从前期筹备到最终成片的完整流程。
+            </p>
+
+            <div class="film-points">
+                <div class="film-point">
+                    <span>01 / PRE</span>
+                    <p>组织人员与分工，参与主题与剧本敲定，制定拍摄计划并完成场地、道具、设备等前期筹备。</p>
+                </div>
+                <div class="film-point">
+                    <span>02 / SHOOT</span>
+                    <p>现场进行演员状态调度、设备管理、镜头与运镜指导，并根据实际场地调整分镜与剧情。</p>
+                </div>
+                <div class="film-point">
+                    <span>03 / POST</span>
+                    <p>参与素材整理、风格调整与剪辑方向把控，最终完成成片精剪。</p>
+                </div>
+                <div class="film-point">
+                    <span>04 / RESULT</span>
+                    <p>作品最终获得校级一等奖。</p>
+                </div>
+            </div>
+
+            <a class="contact-link" style="display:inline-block;margin-top:24px;" href="https://www.bilibili.com/video/BV1bpEn6XEgF/" target="_blank" rel="noopener noreferrer">查看完整版 ↗</a>
+        </div>
+    </div>
+</div>
+</section>
+
+
+<!-- =====================================================
+     05 关于我 + 技能
+     ===================================================== -->
+<section class="section about-section" id="about">
+<div class="container">
+
+    <div class="section-head reveal">
+        <div class="eyebrow">04 / ABOUT</div>
+        <div>
+            <h2 class="section-title">关于我</h2>
+        </div>
+    </div>
+
+    <div class="about-layout reveal">
+        <div class="about-lead">
+            我想做的，不只是把视频做出来，
+            而是参与决定“应该做什么”。
+        </div>
+
+        <div class="about-text">
+            <p>
+                我是一名正在向视频创意策划发展的内容创作者，
+                具备游戏买量、品牌视频、AIGC内容和校园微电影实践经验。
+            </p>
+            <p>
+                我的关注点从单纯的制作执行逐渐转向：
+                创意为什么成立、镜头为什么这样安排、用户为什么愿意继续看，
+                以及素材如何通过反馈不断迭代。
+            </p>
+            <p>
+                我希望在实际项目中继续强化创意策划、用户洞察、
+                脚本分镜和内容策略能力，同时保留从想法到成片的执行能力。
+            </p>
+        </div>
+    </div>
+
+
+    <div class="skills reveal">
+        <div class="mini-label" style="margin-bottom:20px;">SKILL MATRIX</div>
+
+        <div class="skill-grid">
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>创意拆解</h3>
+                    <span class="skill-score">★★★★★</span>
+                </div>
+                <p>从用户、卖点和传播逻辑出发拆解素材结构，寻找可复用的创意方法。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>用户洞察</h3>
+                    <span class="skill-score">★★★★★</span>
+                </div>
+                <p>从目标用户的情绪、需求与注意力习惯出发寻找内容切入点。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>素材迭代策略</h3>
+                    <span class="skill-score">★★★★★</span>
+                </div>
+                <p>根据素材反馈调整钩子、节奏、信息密度与卖点表达，形成迭代思维。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>镜头节奏把控</h3>
+                    <span class="skill-score">★★★★★</span>
+                </div>
+                <p>关注镜头之间的信息关系、情绪递进与观看节奏，而非单纯堆叠素材。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>视觉叙事</h3>
+                    <span class="skill-score">★★★★☆</span>
+                </div>
+                <p>具备脚本、分镜、构图、镜头调度与故事表达基础。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>AIGC内容生产</h3>
+                    <span class="skill-score">★★★★☆</span>
+                </div>
+                <p>能够将AIGC作为创意生产工具，辅助完成图片、视频、动画及视觉方案。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>视频剪辑</h3>
+                    <span class="skill-score">★★★★☆</span>
+                </div>
+                <p>具备从素材整理、粗剪、精剪到最终成片的完整制作能力。</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-head">
+                    <h3>AE / PS / PR</h3>
+                    <span class="skill-score">★★★☆☆</span>
+                </div>
+                <p>作为视觉执行工具，用于特效、包装、合成、画面处理与后期制作。</p>
+            </div>
+
+        </div>
+
+        <div class="tool-box">
+            <h4>TOOLS / 工具箱</h4>
+            <div class="tool-tags">
+                <span class="tool-tag">剪映专业版</span>
+                <span class="tool-tag">Premiere Pro</span>
+                <span class="tool-tag">After Effects</span>
+                <span class="tool-tag">Photoshop</span>
+                <span class="tool-tag">Seedance</span>
+                <span class="tool-tag">可灵</span>
+                <span class="tool-tag">即梦</span>
+                <span class="tool-tag">Nanobanana</span>
+                <span class="tool-tag">豆包</span>
+                <span class="tool-tag">通义千问</span>
+                <span class="tool-tag">Gemini</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+</section>
+
+
+<!-- =====================================================
+     06 联系
+     ===================================================== -->
+<section class="contact">
+    <div class="container reveal">
+        <div class="mini-label">CONTACT</div>
+        <h2>LET'S CREATE</h2>
+        <p>
+            如果你正在寻找能够参与创意、脚本、分镜与视频制作的内容创作者，
+            欢迎联系我。
+        </p>
+
+        <div class="contact-links">
+            <a class="contact-link" href="mailto:2931035393@qq.com">2931035393@qq.com</a>
+            <span class="contact-link">微信：Wei19876335882</span>
+        </div>
+    </div>
+</section>
+
+</main>
+
+
+<footer>
+    <div class="container footer-inner">
+        <span>© 2026 黄宝怡 Portfolio. All Rights Reserved.</span>
+        <span>VIDEO CREATIVE / GAME UA / DIRECTING</span>
+    </div>
+</footer>
+
+
+<!-- 图片灯箱 -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="关闭">×</button>
+    <img id="lightboxImage" alt="作品大图预览">
+</div>
+
+
+<script src="assets/js/main.js" defer></script>
+
+</body>
+</html>

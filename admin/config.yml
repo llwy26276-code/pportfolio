@@ -1,0 +1,644 @@
+# JSON is valid YAML. Edit backend.base_url after deploying the OAuth worker.
+{
+  "backend": {
+    "name": "github",
+    "repo": "llwy26276-code/portfolio",
+    "branch": "main",
+    "base_url": "https://YOUR-OAUTH-WORKER.workers.dev",
+    "auth_endpoint": "auth"
+  },
+  "site_url": "https://llwy26276-code.github.io/portfolio/",
+  "display_url": "https://llwy26276-code.github.io/portfolio/",
+  "locale": "zh_Hans",
+  "media_folder": "assets/uploads",
+  "public_folder": "/assets/uploads",
+  "slug": {
+    "encoding": "ascii",
+    "clean_accents": true,
+    "sanitize_replacement": "-"
+  },
+  "collections": [
+    {
+      "name": "game",
+      "label": "游戏案例",
+      "folder": "content/game",
+      "create": true,
+      "delete": true,
+      "extension": "json",
+      "format": "json",
+      "slug": "{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}-{{slug}}",
+      "summary": "{{title}}",
+      "sortable_fields": [
+        "order",
+        "title"
+      ],
+      "editor": {
+        "preview": false
+      },
+      "fields": [
+        {
+          "name": "title",
+          "label": "作品标题",
+          "widget": "string",
+          "required": true
+        },
+        {
+          "name": "order",
+          "label": "排序",
+          "widget": "number",
+          "required": true,
+          "default": 1,
+          "value_type": "int",
+          "min": 0
+        },
+        {
+          "name": "summary",
+          "label": "一句话介绍",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "introduction",
+          "label": "项目介绍",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "role",
+          "label": "我的职责",
+          "widget": "string",
+          "required": false
+        },
+        {
+          "name": "cover",
+          "label": "封面图",
+          "widget": "image",
+          "required": false,
+          "choose_url": false,
+          "hint": "PNG、JPG、WEBP 或 GIF，单张不超过 5 MB。",
+          "pattern": [
+            "\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[gG][iI][fF])$",
+            "请选择 PNG、JPG、WEBP 或 GIF 图片。"
+          ],
+          "media_library": {
+            "config": {
+              "max_file_size": 5242880
+            }
+          }
+        },
+        {
+          "name": "video_url",
+          "label": "视频外链（B 站等）",
+          "widget": "string",
+          "required": false,
+          "hint": "填写 HTTPS 视频页面地址，不上传视频文件。",
+          "pattern": [
+            "^https://[^\\s]+$",
+            "请填写 https:// 开头的地址，或留空。"
+          ]
+        },
+        {
+          "name": "task",
+          "label": "核心任务",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "hook",
+          "label": "A 钩子",
+          "widget": "object",
+          "required": false,
+          "fields": [
+            {
+              "name": "title",
+              "label": "标题",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "text",
+              "label": "说明",
+              "widget": "text",
+              "required": false
+            },
+            {
+              "name": "images",
+              "label": "案例图片（可添加多张）",
+              "widget": "list",
+              "required": false,
+              "fields": [
+                {
+                  "name": "image",
+                  "label": "图片",
+                  "widget": "image",
+                  "required": false,
+                  "choose_url": false,
+                  "hint": "PNG、JPG、WEBP 或 GIF，单张不超过 5 MB。",
+                  "pattern": [
+                    "\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[gG][iI][fF])$",
+                    "请选择 PNG、JPG、WEBP 或 GIF 图片。"
+                  ],
+                  "media_library": {
+                    "config": {
+                      "max_file_size": 5242880
+                    }
+                  }
+                },
+                {
+                  "name": "caption",
+                  "label": "图片说明",
+                  "widget": "string",
+                  "required": false
+                }
+              ],
+              "default": [],
+              "collapsed": true,
+              "summary": "{{fields.title}}{{fields.caption}}"
+            },
+            {
+              "name": "analysis",
+              "label": "创意说明",
+              "widget": "text",
+              "required": false
+            }
+          ]
+        },
+        {
+          "name": "value_title",
+          "label": "B 卖点总标题",
+          "widget": "string",
+          "required": false
+        },
+        {
+          "name": "value_text",
+          "label": "B 卖点总说明",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "selling_points",
+          "label": "B 卖点模块（可添加多个）",
+          "widget": "list",
+          "required": false,
+          "fields": [
+            {
+              "name": "title",
+              "label": "模块标题",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "text",
+              "label": "模块说明",
+              "widget": "text",
+              "required": false
+            },
+            {
+              "name": "images",
+              "label": "案例图片（可添加多张）",
+              "widget": "list",
+              "required": false,
+              "fields": [
+                {
+                  "name": "image",
+                  "label": "图片",
+                  "widget": "image",
+                  "required": false,
+                  "choose_url": false,
+                  "hint": "PNG、JPG、WEBP 或 GIF，单张不超过 5 MB。",
+                  "pattern": [
+                    "\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[gG][iI][fF])$",
+                    "请选择 PNG、JPG、WEBP 或 GIF 图片。"
+                  ],
+                  "media_library": {
+                    "config": {
+                      "max_file_size": 5242880
+                    }
+                  }
+                },
+                {
+                  "name": "caption",
+                  "label": "图片说明",
+                  "widget": "string",
+                  "required": false
+                }
+              ],
+              "default": [],
+              "collapsed": true,
+              "summary": "{{fields.title}}{{fields.caption}}"
+            }
+          ],
+          "default": [],
+          "collapsed": true,
+          "summary": "{{fields.title}}{{fields.caption}}"
+        },
+        {
+          "name": "cta",
+          "label": "C CTA",
+          "widget": "object",
+          "required": false,
+          "fields": [
+            {
+              "name": "title",
+              "label": "标题",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "text",
+              "label": "说明",
+              "widget": "text",
+              "required": false
+            },
+            {
+              "name": "images",
+              "label": "案例图片（可添加多张）",
+              "widget": "list",
+              "required": false,
+              "fields": [
+                {
+                  "name": "image",
+                  "label": "图片",
+                  "widget": "image",
+                  "required": false,
+                  "choose_url": false,
+                  "hint": "PNG、JPG、WEBP 或 GIF，单张不超过 5 MB。",
+                  "pattern": [
+                    "\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[gG][iI][fF])$",
+                    "请选择 PNG、JPG、WEBP 或 GIF 图片。"
+                  ],
+                  "media_library": {
+                    "config": {
+                      "max_file_size": 5242880
+                    }
+                  }
+                },
+                {
+                  "name": "caption",
+                  "label": "图片说明",
+                  "widget": "string",
+                  "required": false
+                }
+              ],
+              "default": [],
+              "collapsed": true,
+              "summary": "{{fields.title}}{{fields.caption}}"
+            },
+            {
+              "name": "analysis",
+              "label": "创意说明",
+              "widget": "text",
+              "required": false
+            }
+          ]
+        },
+        {
+          "name": "iterations",
+          "label": "迭代步骤",
+          "widget": "list",
+          "required": false,
+          "fields": [
+            {
+              "name": "title",
+              "label": "版本 / 阶段",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "text",
+              "label": "调整说明",
+              "widget": "text",
+              "required": false
+            }
+          ],
+          "default": [],
+          "collapsed": true,
+          "summary": "{{fields.title}}{{fields.caption}}"
+        },
+        {
+          "name": "copyright",
+          "label": "版权说明",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "analysis",
+          "label": "案例分析",
+          "widget": "list",
+          "required": false,
+          "fields": [
+            {
+              "name": "title",
+              "label": "分析标题",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "text",
+              "label": "分析文字",
+              "widget": "text",
+              "required": false
+            }
+          ],
+          "default": [],
+          "collapsed": true,
+          "summary": "{{fields.title}}{{fields.caption}}"
+        },
+        {
+          "name": "review",
+          "label": "复盘文字",
+          "widget": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "brand",
+      "label": "品牌视频",
+      "folder": "content/brand",
+      "create": true,
+      "delete": true,
+      "extension": "json",
+      "format": "json",
+      "slug": "{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}-{{slug}}",
+      "summary": "{{title}}",
+      "sortable_fields": [
+        "order",
+        "title"
+      ],
+      "editor": {
+        "preview": false
+      },
+      "fields": [
+        {
+          "name": "title",
+          "label": "作品标题",
+          "widget": "string",
+          "required": true
+        },
+        {
+          "name": "order",
+          "label": "排序",
+          "widget": "number",
+          "required": true,
+          "default": 1,
+          "value_type": "int",
+          "min": 0
+        },
+        {
+          "name": "summary",
+          "label": "一句话介绍",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "introduction",
+          "label": "项目介绍",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "role",
+          "label": "我的职责",
+          "widget": "string",
+          "required": false
+        },
+        {
+          "name": "cover",
+          "label": "封面图",
+          "widget": "image",
+          "required": false,
+          "choose_url": false,
+          "hint": "PNG、JPG、WEBP 或 GIF，单张不超过 5 MB。",
+          "pattern": [
+            "\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[gG][iI][fF])$",
+            "请选择 PNG、JPG、WEBP 或 GIF 图片。"
+          ],
+          "media_library": {
+            "config": {
+              "max_file_size": 5242880
+            }
+          }
+        },
+        {
+          "name": "video_url",
+          "label": "视频外链（B 站等）",
+          "widget": "string",
+          "required": false,
+          "hint": "填写 HTTPS 视频页面地址，不上传视频文件。",
+          "pattern": [
+            "^https://[^\\s]+$",
+            "请填写 https:// 开头的地址，或留空。"
+          ]
+        },
+        {
+          "name": "images",
+          "label": "案例图片（可添加多张）",
+          "widget": "list",
+          "required": false,
+          "fields": [
+            {
+              "name": "image",
+              "label": "图片",
+              "widget": "image",
+              "required": false,
+              "choose_url": false,
+              "hint": "PNG、JPG、WEBP 或 GIF，单张不超过 5 MB。",
+              "pattern": [
+                "\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[gG][iI][fF])$",
+                "请选择 PNG、JPG、WEBP 或 GIF 图片。"
+              ],
+              "media_library": {
+                "config": {
+                  "max_file_size": 5242880
+                }
+              }
+            },
+            {
+              "name": "caption",
+              "label": "图片说明",
+              "widget": "string",
+              "required": false
+            }
+          ],
+          "default": [],
+          "collapsed": true,
+          "summary": "{{fields.title}}{{fields.caption}}"
+        },
+        {
+          "name": "analysis",
+          "label": "案例分析",
+          "widget": "list",
+          "required": false,
+          "fields": [
+            {
+              "name": "title",
+              "label": "分析标题",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "text",
+              "label": "分析文字",
+              "widget": "text",
+              "required": false
+            }
+          ],
+          "default": [],
+          "collapsed": true,
+          "summary": "{{fields.title}}{{fields.caption}}"
+        },
+        {
+          "name": "review",
+          "label": "复盘文字",
+          "widget": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "film",
+      "label": "校园微电影",
+      "folder": "content/film",
+      "create": true,
+      "delete": true,
+      "extension": "json",
+      "format": "json",
+      "slug": "{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}-{{slug}}",
+      "summary": "{{title}}",
+      "sortable_fields": [
+        "order",
+        "title"
+      ],
+      "editor": {
+        "preview": false
+      },
+      "fields": [
+        {
+          "name": "title",
+          "label": "作品标题",
+          "widget": "string",
+          "required": true
+        },
+        {
+          "name": "order",
+          "label": "排序",
+          "widget": "number",
+          "required": true,
+          "default": 1,
+          "value_type": "int",
+          "min": 0
+        },
+        {
+          "name": "summary",
+          "label": "一句话介绍",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "introduction",
+          "label": "项目介绍",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "role",
+          "label": "我的职责",
+          "widget": "string",
+          "required": false
+        },
+        {
+          "name": "cover",
+          "label": "封面图",
+          "widget": "image",
+          "required": false,
+          "choose_url": false,
+          "hint": "PNG、JPG、WEBP 或 GIF，单张不超过 5 MB。",
+          "pattern": [
+            "\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[gG][iI][fF])$",
+            "请选择 PNG、JPG、WEBP 或 GIF 图片。"
+          ],
+          "media_library": {
+            "config": {
+              "max_file_size": 5242880
+            }
+          }
+        },
+        {
+          "name": "video_url",
+          "label": "视频外链（B 站等）",
+          "widget": "string",
+          "required": false,
+          "hint": "填写 HTTPS 视频页面地址，不上传视频文件。",
+          "pattern": [
+            "^https://[^\\s]+$",
+            "请填写 https:// 开头的地址，或留空。"
+          ]
+        },
+        {
+          "name": "images",
+          "label": "案例图片（可添加多张）",
+          "widget": "list",
+          "required": false,
+          "fields": [
+            {
+              "name": "image",
+              "label": "图片",
+              "widget": "image",
+              "required": false,
+              "choose_url": false,
+              "hint": "PNG、JPG、WEBP 或 GIF，单张不超过 5 MB。",
+              "pattern": [
+                "\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[gG][iI][fF])$",
+                "请选择 PNG、JPG、WEBP 或 GIF 图片。"
+              ],
+              "media_library": {
+                "config": {
+                  "max_file_size": 5242880
+                }
+              }
+            },
+            {
+              "name": "caption",
+              "label": "图片说明",
+              "widget": "string",
+              "required": false
+            }
+          ],
+          "default": [],
+          "collapsed": true,
+          "summary": "{{fields.title}}{{fields.caption}}"
+        },
+        {
+          "name": "analysis",
+          "label": "案例分析",
+          "widget": "list",
+          "required": false,
+          "fields": [
+            {
+              "name": "title",
+              "label": "分析标题",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "text",
+              "label": "分析文字",
+              "widget": "text",
+              "required": false
+            }
+          ],
+          "default": [],
+          "collapsed": true,
+          "summary": "{{fields.title}}{{fields.caption}}"
+        },
+        {
+          "name": "review",
+          "label": "复盘文字",
+          "widget": "text",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
