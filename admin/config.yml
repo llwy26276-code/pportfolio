@@ -2,13 +2,13 @@
 {
   "backend": {
     "name": "github",
-    "repo": "llwy26276-code/portfolio",
+    "repo": "llwy26276-code/pportfolio",
     "branch": "main",
-    "base_url": ""https://portfolio-cms-oauth.llwy26276.workers.dev"",
+    "base_url": "https://portfolio-cms-oauth.llwy26276.workers.dev",
     "auth_endpoint": "auth"
   },
-  "site_url": "https://llwy26276-code.github.io/portfolio/",
-  "display_url": "https://llwy26276-code.github.io/portfolio/",
+  "site_url": "https://llwy26276-code.github.io/pportfolio/",
+  "display_url": "https://llwy26276-code.github.io/pportfolio/",
   "locale": "zh_Hans",
   "media_folder": "assets/uploads",
   "public_folder": "/assets/uploads",
