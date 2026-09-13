@@ -13,7 +13,11 @@ export function readWorks(category) {
     const check = value => {
       if (!value || typeof value !== 'object') return;
       for (const [key,v] of Object.entries(value)) {
-        if ((key==='image'||key==='cover') && v && !fs.existsSync(path.join(root,mediaPath(v)))) throw new Error(`Missing image: ${v}`);
+        if ((key==='image'||key==='cover') && v) {
+          const repositoryPath = mediaPath(v);
+          const filePath = path.resolve(root, repositoryPath);
+          if (!fs.existsSync(filePath)) throw new Error(`Missing image: ${v} (expected ${repositoryPath})`);
+        }
         if (typeof v === 'object') check(v);
       }
     };

@@ -15,8 +15,6 @@
     } else if (config.backend.base_url.includes('YOUR-OAUTH-WORKER')) {
       throw new Error('云端登录尚未启用：请先部署 OAuth 授权服务并配置 admin/config.yml 中的 backend.base_url。');
     }
-    // Data uses site-relative paths; the CMS preview needs the actual project prefix.
-    config.public_folder = new URL('../assets/uploads/',location.href).pathname.replace(/\/$/,'');
     window.CMS.init({config});
     status.remove();
   } catch (error) { status.textContent = error.message; }

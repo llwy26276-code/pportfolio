@@ -1,7 +1,11 @@
 export const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export const SITE_BASE_PATH = '/pportfolio';
 export function mediaPath(value) {
   if (!value) return '';
-  const path = String(value).replace(/^\/portfolio\//, '').replace(/^\//, '');
+  const publicPath = String(value).trim();
+  const path = publicPath.startsWith(`${SITE_BASE_PATH}/`)
+    ? publicPath.slice(SITE_BASE_PATH.length + 1)
+    : publicPath.replace(/^\//, '');
   if (!/^assets\/uploads\/[^\\?#%\u0000-\u001f]+\.(png|jpe?g|webp|gif)$/i.test(path) || path.split('/').some(part=>part==='..'||part==='.')) throw new Error(`Invalid image path: ${value}`);
   return path;
 }

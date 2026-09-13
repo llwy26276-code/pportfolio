@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { root, build } from './build.mjs';
+import { SITE_BASE_PATH } from './render.mjs';
 process.chdir(root);
 build();
 const proxy = spawn(process.execPath,['node_modules/decap-server/dist/index.js'],{cwd:root,stdio:'inherit',env:{...process.env,BIND_HOST:'127.0.0.1',PORT:'8081',MODE:'fs',ORIGIN:'http://localhost:4174'}});
@@ -19,7 +20,7 @@ const server = http.createServer((req,res)=>{
     if(current!==previous){build();previous=current;}
     let url=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
     // Also preview GitHub project paths to catch base-path mistakes.
-    if(url.startsWith('/portfolio/')) url=url.slice('/portfolio'.length);
+    if(url.startsWith(`${SITE_BASE_PATH}/`)) url=url.slice(SITE_BASE_PATH.length);
     if(url.endsWith('/')) url+='index.html';
     const base=path.join(root,'dist');
     const file=path.resolve(base,'.'+url);
