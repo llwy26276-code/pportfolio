@@ -31,7 +31,7 @@ test('URLs reject scripts and filesystem traversal',()=>{
 });
 test('CMS schema covers folder CRUD and nested image lists',()=>{
   const config=JSON.parse(fs.readFileSync('admin/config.yml','utf8').replace(/^#.*\n/,''));
-  assert.equal(config.backend.repo,'llwy26276-code/portfolio');
+  assert.equal(config.backend.repo,'llwy26276-code/pportfolio');
   for(const collection of config.collections){
     assert.ok(collection.create && collection.delete);
     assert.equal(collection.format,'json');
