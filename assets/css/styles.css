@@ -16,7 +16,8 @@
     --accent-soft:#e6e8e1;
     --warm:#b09d83;
     --shadow:0 18px 50px rgba(45,46,42,.08);
-    --max:1180px;
+    --max:1280px;
+    --page-padding:clamp(64px,5vw,80px);
     --radius:18px;
 }
 
@@ -28,8 +29,6 @@
 .film-layout + .film-layout{margin-top:65px;}
 .empty-state{padding:30px 0;color:var(--muted);}
 .case-tab strong{overflow-wrap:anywhere;}
-.game-section{padding-inline:max(16px,calc((100% - var(--max))/2));}
-
 *{margin:0;padding:0;box-sizing:border-box;}
 
 html{
@@ -55,9 +54,13 @@ button{font:inherit;}
 
 /* ---------- 通用 ---------- */
 
-.container{
-    width:min(var(--max),calc(100% - 64px));
-    margin:0 auto;
+.container,
+.game-section > .section-head,
+.game-section > .case-switcher,
+.game-section > .case-panels,
+.game-section > .empty-state{
+    width:min(var(--max),calc(100% - var(--page-padding) - var(--page-padding)));
+    margin-inline:auto;
 }
 
 .section{
@@ -895,8 +898,12 @@ footer{
 
 /* ---------- 手机端 ---------- */
 
+@media(max-width:1200px){
+    :root{--page-padding:48px;}
+}
+
 @media(max-width:900px){
-    .container{width:min(var(--max),calc(100% - 40px));}
+    :root{--page-padding:40px;}
     .section{padding:95px 0;}
     .section-head{grid-template-columns:1fr;gap:14px;margin-bottom:45px;}
 
@@ -920,14 +927,14 @@ footer{
 }
 
 @media(max-width:680px){
-    .container{width:calc(100% - 32px);}
+    :root{--page-padding:22px;}
     .nav{min-height:64px;}
     .nav-menu{display:block;}
     .nav-links{
         position:absolute;
         top:64px;
-        left:16px;
-        right:16px;
+        left:var(--page-padding);
+        right:var(--page-padding);
         display:none;
         flex-direction:column;
         align-items:stretch;
