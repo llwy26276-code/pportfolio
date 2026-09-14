@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { load } from 'cheerio';
-import { renderGame, renderBrand, renderFilm, mediaPath, videoUrl, SITE_BASE_PATH } from '../scripts/render.mjs';
+import { renderGame, renderBrand, renderFilm, mediaPath, videoUrl, bilibiliBvid, bilibiliPlayerUrl, SITE_BASE_PATH } from '../scripts/render.mjs';
 import { readWorks } from '../scripts/build.mjs';
 test('all current works validate without fixing the number of entries',()=>{
   for (const category of ['game','brand','film']) assert.ok(Array.isArray(readWorks(category)));
@@ -35,6 +35,26 @@ test('URLs reject scripts, the old base path, and filesystem traversal',()=>{
   assert.throws(()=>videoUrl('javascript:alert(1)'));
   assert.throws(()=>videoUrl('http://example.com'));
 });
+test('Bilibili BV ids render safe lazy players only when valid',()=>{
+  const valid='BV1Kj7Q6NEAj';
+  assert.equal(bilibiliBvid(` ${valid} `),valid);
+  assert.equal(bilibiliPlayerUrl(valid),`https://player.bilibili.com/player.html?bvid=${valid}&page=1`);
+
+  for (const render of [renderGame,renderBrand,renderFilm]) {
+    const withPlayer=load(render([{id:'bilibili-test',title:'Bilibili test',bilibili_bvid:valid}]));
+    assert.equal(withPlayer('[data-bilibili-player]').attr('data-bvid'),valid);
+    assert.equal(withPlayer('.bilibili-play').length,1);
+    assert.equal(withPlayer('iframe').length,0);
+
+    const withoutPlayer=load(render([{id:'no-bilibili',title:'No Bilibili'}]));
+    assert.equal(withoutPlayer('[data-bilibili-player], iframe').length,0);
+
+    const invalid=load(render([{id:'invalid-bilibili',title:'Invalid Bilibili',bilibili_bvid:'<iframe src="https://evil.test">'}]));
+    assert.equal(invalid('[data-bilibili-player], iframe').length,0);
+  }
+  assert.equal(bilibiliPlayerUrl('BV-invalid'), '');
+  assert.equal(bilibiliPlayerUrl('<iframe src="https://evil.test">'), '');
+});
 test('CMS schema covers folder CRUD and nested image lists',()=>{
   const config=JSON.parse(fs.readFileSync('admin/config.yml','utf8').replace(/^#.*\n/,''));
   assert.equal(config.backend.repo,'llwy26276-code/pportfolio');
@@ -44,6 +64,11 @@ test('CMS schema covers folder CRUD and nested image lists',()=>{
   for(const collection of config.collections){
     assert.ok(collection.create && collection.delete);
     assert.equal(collection.format,'json');
+    const bvid=collection.fields.find(field=>field.name==='bilibili_bvid');
+    assert.equal(bvid.label,'B站 BV号');
+    assert.equal(bvid.required,false);
+    assert.ok(new RegExp(bvid.pattern[0]).test('BV1Kj7Q6NEAj'));
+    assert.equal(new RegExp(bvid.pattern[0]).test('https://www.bilibili.com/video/BV1Kj7Q6NEAj/'),false);
   }
   const fields=config.collections[0].fields;
   const checkPatterns = fields => fields.forEach(field => {

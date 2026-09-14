@@ -68,6 +68,26 @@ document.addEventListener("keydown", event => {
     }
 });
 
+// ---------- Bilibili 播放器（点击后再加载） ----------
+const bilibiliBvidPattern = /^BV[1-9A-HJ-NP-Za-km-z]{10}$/;
+
+document.addEventListener("click", event => {
+    const button = event.target.closest(".bilibili-play");
+    if(!button) return;
+
+    const player = button.closest("[data-bilibili-player]");
+    const bvid = player?.dataset.bvid || "";
+    if(!bilibiliBvidPattern.test(bvid)) return;
+
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://player.bilibili.com/player.html?bvid=${encodeURIComponent(bvid)}&page=1`;
+    iframe.title = `${button.getAttribute("aria-label") || "Bilibili 视频"}播放器`;
+    iframe.allow = "autoplay; fullscreen; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    player.replaceChildren(iframe);
+});
+
 // ---------- 当前导航高亮 ----------
 const sections = document.querySelectorAll("main section[id]");
 const navItems = document.querySelectorAll(".nav-links a");

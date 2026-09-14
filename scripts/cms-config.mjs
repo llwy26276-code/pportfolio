@@ -6,7 +6,7 @@ const image = (name,label) => field(name,label,'image',{choose_url:false,hint:'P
 const images = () => list('images','案例图片（可添加多张）',[image('image','图片'),field('caption','图片说明')]);
 const analysis = () => list('analysis','案例分析',[field('title','分析标题'),field('text','分析文字','text')]);
 const stage = (name,label) => field(name,label,'object',{fields:[field('title','标题'),field('text','说明','text'),images(),field('analysis','创意说明','text')]});
-const common = () => [field('title','作品标题','string',{required:true}),field('order','排序','number',{required:true,default:1,value_type:'int',min:0}),field('summary','一句话介绍','text'),field('introduction','项目介绍','text'),field('role','我的职责'),image('cover','封面图'),field('video_url','视频外链（B 站等）','string',{hint:'填写 HTTPS 视频页面地址，不上传视频文件。',pattern:['^https://[^\\s]+$','请填写 https:// 开头的地址，或留空。']})];
+const common = () => [field('title','作品标题','string',{required:true}),field('order','排序','number',{required:true,default:1,value_type:'int',min:0}),field('summary','一句话介绍','text'),field('introduction','项目介绍','text'),field('role','我的职责'),image('cover','封面图'),field('bilibili_bvid','B站 BV号','string',{hint:'只填写 BV 号，例如 BV1Kj7Q6NEAj。保存后前台可点击封面在页面内播放。',pattern:['^BV[1-9A-HJ-NP-Za-km-z]{10}$','请填写标准 BV 号，例如 BV1Kj7Q6NEAj，或留空。']}),field('video_url','视频外链（B 站等）','string',{hint:'填写 HTTPS 视频页面地址，不上传视频文件。已有外链会继续保留。',pattern:['^https://[^\\s]+$','请填写 https:// 开头的地址，或留空。']})];
 const repository = 'llwy26276-code/pportfolio';
 const siteUrl = `https://llwy26276-code.github.io${SITE_BASE_PATH}/`;
 const mediaFolder = 'assets/uploads';

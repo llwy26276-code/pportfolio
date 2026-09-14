@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderGame, renderBrand, renderFilm, mediaPath, videoUrl } from './render.mjs';
+import { renderGame, renderBrand, renderFilm, mediaPath, videoUrl, bilibiliPlayerUrl } from './render.mjs';
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export function readWorks(category) {
   const directory=path.join(root,'content',category);
@@ -10,6 +10,7 @@ export function readWorks(category) {
     const work = JSON.parse(fs.readFileSync(path.join(root,'content',category,name),'utf8'));
     if (!work.title?.trim() || !Number.isFinite(work.order)) throw new Error(`Invalid title/order in ${name}`);
     videoUrl(work.video_url);
+    if (work.bilibili_bvid && !bilibiliPlayerUrl(work.bilibili_bvid)) throw new Error(`Invalid Bilibili BV id in ${name}`);
     const check = value => {
       if (!value || typeof value !== 'object') return;
       for (const [key,v] of Object.entries(value)) {

@@ -87,11 +87,22 @@
           }
         },
         {
+          "name": "bilibili_bvid",
+          "label": "B站 BV号",
+          "widget": "string",
+          "required": false,
+          "hint": "只填写 BV 号，例如 BV1Kj7Q6NEAj。保存后前台可点击封面在页面内播放。",
+          "pattern": [
+            "^BV[1-9A-HJ-NP-Za-km-z]{10}$",
+            "请填写标准 BV 号，例如 BV1Kj7Q6NEAj，或留空。"
+          ]
+        },
+        {
           "name": "video_url",
           "label": "视频外链（B 站等）",
           "widget": "string",
           "required": false,
-          "hint": "填写 HTTPS 视频页面地址，不上传视频文件。",
+          "hint": "填写 HTTPS 视频页面地址，不上传视频文件。已有外链会继续保留。",
           "pattern": [
             "^https://[^\\s]+$",
             "请填写 https:// 开头的地址，或留空。"
@@ -421,11 +432,22 @@
           }
         },
         {
+          "name": "bilibili_bvid",
+          "label": "B站 BV号",
+          "widget": "string",
+          "required": false,
+          "hint": "只填写 BV 号，例如 BV1Kj7Q6NEAj。保存后前台可点击封面在页面内播放。",
+          "pattern": [
+            "^BV[1-9A-HJ-NP-Za-km-z]{10}$",
+            "请填写标准 BV 号，例如 BV1Kj7Q6NEAj，或留空。"
+          ]
+        },
+        {
           "name": "video_url",
           "label": "视频外链（B 站等）",
           "widget": "string",
           "required": false,
-          "hint": "填写 HTTPS 视频页面地址，不上传视频文件。",
+          "hint": "填写 HTTPS 视频页面地址，不上传视频文件。已有外链会继续保留。",
           "pattern": [
             "^https://[^\\s]+$",
             "请填写 https:// 开头的地址，或留空。"
@@ -565,11 +587,22 @@
           }
         },
         {
+          "name": "bilibili_bvid",
+          "label": "B站 BV号",
+          "widget": "string",
+          "required": false,
+          "hint": "只填写 BV 号，例如 BV1Kj7Q6NEAj。保存后前台可点击封面在页面内播放。",
+          "pattern": [
+            "^BV[1-9A-HJ-NP-Za-km-z]{10}$",
+            "请填写标准 BV 号，例如 BV1Kj7Q6NEAj，或留空。"
+          ]
+        },
+        {
           "name": "video_url",
           "label": "视频外链（B 站等）",
           "widget": "string",
           "required": false,
-          "hint": "填写 HTTPS 视频页面地址，不上传视频文件。",
+          "hint": "填写 HTTPS 视频页面地址，不上传视频文件。已有外链会继续保留。",
           "pattern": [
             "^https://[^\\s]+$",
             "请填写 https:// 开头的地址，或留空。"
