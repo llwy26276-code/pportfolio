@@ -25,11 +25,20 @@ export function bilibiliPlayerUrl(value) {
   const bvid = bilibiliBvid(value);
   return bvid ? `https://player.bilibili.com/player.html?bvid=${bvid}&page=1` : '';
 }
+export function bilibiliBvidFromUrl(value) {
+  if (!value) return '';
+  let url;
+  try { url = new URL(value); } catch { return ''; }
+  const hostname = url.hostname.toLowerCase();
+  if (url.protocol !== 'https:' || (hostname !== 'bilibili.com' && !hostname.endsWith('.bilibili.com'))) return '';
+  const match = url.pathname.match(/^\/video\/(BV[1-9A-HJ-NP-Za-km-z]{10})(?:\/|$)/);
+  return match ? bilibiliBvid(match[1]) : '';
+}
 const p = text => text ? `<p class="content-text">${escape(text)}</p>` : '';
 const link = work => work.video_url ? `<a class="contact-link work-video-link" href="${escape(videoUrl(work.video_url))}" target="_blank" rel="noopener noreferrer">查看完整视频 ↗</a>` : '';
 const cover = work => work.cover ? `<img class="work-cover clickable-thumb" src="${escape(mediaPath(work.cover))}" alt="${escape(work.title)}" loading="lazy">` : '';
 const primaryMedia = work => {
-  const bvid = bilibiliBvid(work.bilibili_bvid);
+  const bvid = bilibiliBvid(work.bilibili_bvid) || bilibiliBvidFromUrl(work.video_url);
   if (!bvid) return cover(work);
   const poster = cover(work) || '<div class="bilibili-poster-fallback"><span>BILIBILI VIDEO</span></div>';
   return `<div class="bilibili-embed" data-bilibili-player data-bvid="${escape(bvid)}">${poster}<button class="bilibili-play" type="button" aria-label="播放 ${escape(work.title)}"><span class="bilibili-play-icon" aria-hidden="true">▶</span><span>查看视频</span></button></div>`;

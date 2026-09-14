@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { load } from 'cheerio';
-import { renderGame, renderBrand, renderFilm, mediaPath, videoUrl, bilibiliBvid, bilibiliPlayerUrl, SITE_BASE_PATH } from '../scripts/render.mjs';
+import { renderGame, renderBrand, renderFilm, mediaPath, videoUrl, bilibiliBvid, bilibiliBvidFromUrl, bilibiliPlayerUrl, SITE_BASE_PATH } from '../scripts/render.mjs';
 import { readWorks } from '../scripts/build.mjs';
 test('all current works validate without fixing the number of entries',()=>{
   for (const category of ['game','brand','film']) assert.ok(Array.isArray(readWorks(category)));
@@ -54,6 +54,20 @@ test('Bilibili BV ids render safe lazy players only when valid',()=>{
   }
   assert.equal(bilibiliPlayerUrl('BV-invalid'), '');
   assert.equal(bilibiliPlayerUrl('<iframe src="https://evil.test">'), '');
+});
+test('existing Bilibili video links automatically provide BV previews',()=>{
+  const valid='BV1bpEn6XEgF';
+  const url=`https://www.bilibili.com/video/${valid}/`;
+  assert.equal(bilibiliBvidFromUrl(url),valid);
+  assert.equal(bilibiliBvidFromUrl(`https://m.bilibili.com/video/${valid}`),valid);
+  assert.equal(bilibiliBvidFromUrl(`https://evil.test/video/${valid}`),'');
+  assert.equal(bilibiliBvidFromUrl(`https://www.bilibili.com.evil.test/video/${valid}`),'');
+
+  const $=load(renderBrand([{id:'legacy-link',title:'Legacy link',video_url:url}]));
+  assert.equal($('[data-bilibili-player]').attr('data-bvid'),valid);
+  assert.equal($('.bilibili-play').length,1);
+  assert.equal($('iframe').length,0);
+  assert.equal($('.work-video-link').attr('href'),url);
 });
 test('CMS schema covers folder CRUD and nested image lists',()=>{
   const config=JSON.parse(fs.readFileSync('admin/config.yml','utf8').replace(/^#.*\n/,''));
